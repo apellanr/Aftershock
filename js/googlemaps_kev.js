@@ -1,5 +1,6 @@
 
 var map;
+var infowindow;
 
 $(document).ready(mapInit);
 
@@ -14,6 +15,8 @@ function mapInit() {
         radius: 8047,
         types: ['cafe'] // Change this
     };
+
+    infowindow = new google.maps.InfoWindow();
 
     var service = new google.maps.places.PlacesService(map);
     service.nearbySearch(request, callback);
@@ -34,4 +37,9 @@ function createMarker(place) {
         map: map,
         position: place.geometry.location
     });
+
+    google.maps.event.addListener(marker, 'click', function () {
+        infowindow.setContent(place.name);
+        infowindow.open(map, this);
+    })
 }
