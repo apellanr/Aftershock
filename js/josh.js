@@ -18,11 +18,11 @@ function ConstructorUSGS(){
 				self.sortUSGSData(returnResponse);
 			},
 			error: function(returnResponse){
-				thisObj.displayServerModal('Delete Error: ' + returnResponse.responseText, "Status Code: " + returnResponse.status);
+				self.displayServerModal('Delete Error: ' + returnResponse.responseText, "Status Code: " + returnResponse.status);
 				console.log('error ', returnResponse);
 			}
 		})
-	}
+	};
 	this.sortUSGSData = function(returnResponse){
 		for(var i = 0; i < 	returnResponse.features.length; i++){
 			var location = returnResponse.features[i].properties.place;
