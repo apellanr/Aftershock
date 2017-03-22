@@ -1,3 +1,27 @@
+html, body, #map {
+	height: 100%;
+	margin: 0;
+}
+
+@font-face {
+	font-family: earthquakefont;
+	src: url(earthquake.ttf);
+}
+
 body{
 	background-color: lavender;
 }
+
+.glyphicon {
+	font-size: 2vmin;
+}
+
+.glyphicon-map-marker  {
+	font-size: 1em;
+}
+
+.navbar-brand {
+	font-size: 3.5vmin;
+	font-family: earthquakefont;
+}
+
