@@ -1,11 +1,26 @@
+html, body, #map {
+	height: 100%;
+	margin: 0;
+}
+
+@font-face {
+	font-family: earthquakefont;
+	src: url(earthquake.ttf);
+}
+
 body{
 	background-color: lavender;
 }
 
-/*	Kevin Start */
+.glyphicon {
+	font-size: 2.5vmin;
+}
 
-html, body, #map {
-	height: 100%;
-	margin: 0px;
-	padding: 0px;
+.glyphicon-map-marker {
+	font-size: 1em;
+}
+
+.navbar-brand {
+	font-size: 3.5vmin;
+	font-family: earthquakefont;
 }
