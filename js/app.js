@@ -31,7 +31,6 @@ function earthquake() {
 
 }
 
-
 function combineLatLongForGoogle(lat_val, lng_val) {
     var temp = {
         lat: lat_val,
@@ -48,6 +47,17 @@ function generateCircle(temp) {
         map: map
     });
 }
+
+
+// 1 month selection radio button
+
+function oneMonthSelector() {
+    $('button').click()
+}
+
+
+// open panel functions
+
 
 
 
