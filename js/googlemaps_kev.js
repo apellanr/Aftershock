@@ -7,6 +7,7 @@ var markers = [];
 $(document).ready(mapInit);
 
 function mapInit() {
+
     var center = new google.maps.LatLng(37.422, -122.084058);
     map = new google.maps.Map(document.getElementById('map'), {
         center: center,
@@ -43,7 +44,6 @@ function callback(results, status) {
         }
     }
 }
-
 function createMarker(place) {
     var placeLoc = place.geometry.location;
     var marker = new google.maps.Marker({

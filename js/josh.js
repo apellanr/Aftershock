@@ -34,7 +34,6 @@ function ConstructorUSGS(){
 			var depth = returnResponse.features[i].geometry.coordinates[2];
 			eqArray30DaysM4p5.push({location, mag, time, lat, long, depth})
 		}
-
 	}
 }
 // josh end work ong josh.js
