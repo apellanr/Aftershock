@@ -1,11 +1,22 @@
-html, body, #map {
+html, body,{
 	height: 100%;
 	margin: 0;
+	padding: 0;
+}
+
+#map {
+	position: ;
+	height: 100%;
 }
 
 @font-face {
 	font-family: earthquakefont;
 	src: url(earthquake.ttf);
+}
+
+.navbar-inverse {
+	z-index: 1;
+	margin-bottom: 0;
 }
 
 body{
@@ -16,11 +27,9 @@ body{
 	font-size: 2vmin;
 }
 
-/*.glyphicon-map-marker {*/
-	/*font-size: 2.4vmin;*/
-/*}*/
-
 .navbar-brand {
 	font-size: 3.5vmin;
 	font-family: earthquakefont;
 }
+
+
