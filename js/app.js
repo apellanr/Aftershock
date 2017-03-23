@@ -130,33 +130,42 @@ function earthquake() {
     var lat_val = 0;
     var lng_val = 0;
     var location = null;
+    var magnitude = null;
     for (var i = 0 ; i < eqArrayMonthM4p5.length ; i++) {
         lat_val = eqArrayMonthM4p5[i].lat;
         lng_val = eqArrayMonthM4p5[i].long;
         location = eqArrayMonthM4p5[i].location;
-        combineLatLongForGoogle(lat_val, lng_val, location);
+        magnitude = eqArrayMonthM4p5[i].mag;
+        combineLatLongForGoogle(lat_val, lng_val, location, magnitude);
     }
 }
-function combineLatLongForGoogle(lat_val, lng_val, location) {
+function combineLatLongForGoogle(lat_val, lng_val, location, magnitude) {
     var temp = {
         lat: lat_val,
         lng: lng_val
     };
-    generateCircle(temp, location);
+    generateCircle(temp, location, magnitude);
     // console.log(temp);
 }
-function generateCircle(temp, location) {
-    var marker = new google.maps.Marker({
-        position: temp,
-        map: map
+function generateCircle(temp, location, magnitude) {
+    var marker = new google.maps.Circle({
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#FF0000',
+        fillOpacity: 0.35,
+        center: temp,
+        map: map,
+        radius: (magnitude * magnitude) * 10000
     });
-    infowindow = new google.maps.InfoWindow();
-    google.maps.event.addListener(marker, 'click', function () {
-        infowindow.setContent("Hi"); // Need to change this to show data.
+    infowindow = new google.maps.InfoWindow(magnitude);
+    google.maps.event.addListener(marker, 'click', function (magnitude) {
+        infowindow.setPosition(this.getCenter());
+        infowindow.setContent('hello'); // Need to change this to show data.
         infowindow.open(map, this);
     });
     createClickHandler(marker, location);
-    return marker;
+    // return marker;
 }
 //function locationLookup() {
 //   address = new LocationConstruct();
@@ -164,9 +173,9 @@ function generateCircle(temp, location) {
 //}
 //Josh twitter start
 function createClickHandler(marker, location){
-    marker.addListener('click', funk.bind(this, location));
+    marker.addListener('click', clickFunction.bind(this, location));
 }
-function funk (location) {
+function clickFunction (location) {
     calltwitter(location);  
 }
 function calltwitter(searchWord){
