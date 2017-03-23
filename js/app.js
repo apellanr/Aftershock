@@ -113,6 +113,7 @@ function mapInit() {
     });
 }
 var geocoder;
+
 function getCoordinates() {
     var coordinates = $('#address').val();
     geocoder.geocode({'address': coordinates}, function (results, status) {
@@ -126,6 +127,7 @@ function getCoordinates() {
 function radioInput() {
     $('input').on('click', function(){})
 }
+
 function earthquake() {
     var lat_val = 0;
     var lng_val = 0;
@@ -137,6 +139,7 @@ function earthquake() {
         combineLatLongForGoogle(lat_val, lng_val, location);
     }
 }
+
 function combineLatLongForGoogle(lat_val, lng_val, location) {
     var temp = {
         lat: lat_val,
@@ -158,10 +161,7 @@ function generateCircle(temp, location) {
     createClickHandler(marker, location);
     return marker;
 }
-//function locationLookup() {
-//   address = new LocationConstruct();
-//    createClickHandler(marker, location);
-//}
+
 //Josh twitter start
 function createClickHandler(marker, location){
     marker.addListener('click', funk.bind(this, location));
@@ -195,6 +195,7 @@ function getTweets(returnResponse){
     }
 }
 //Josh twitter end
+
 // open panel functions
 $(document).ready(glyphClick);
 function glyphClick() {
@@ -205,6 +206,7 @@ function glyphClick() {
         $('.rightPanel').toggleClass('on');
     });
 }
+
 // Create a <script> tag and set the USGS URL as the source.
 //  var script = document.createElement('script');
 // This example uses a local copy of the GeoJSON stored at
@@ -268,3 +270,4 @@ function glyphClick() {
  markers = [];
  }
  */
+
