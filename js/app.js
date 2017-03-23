@@ -96,7 +96,7 @@ var map;
 var infowindow;
 var request;
 var service;
-var markers = [];
+var circle = [];
 
 $(document).ready(initialize);
 function initialize() {
@@ -114,11 +114,9 @@ function eqHistoryByDays() {
     days_clicked = $(this).val();
     if (days_clicked == 1) {
         current_array = eqArrayDayM4p5;
-
     }
     else if (days_clicked == 7){
         current_array = eqArrayWeekM4p5;
-
     }
     else {
         current_array = eqArrayMonthM4p5;
@@ -167,7 +165,6 @@ function earthquake(current_array) {
     }
 }
 function combineLatLongForGoogle(eqData) {
-
     var temp = {
         lat: eqData.lat_val,
         lng: eqData.lng_val
@@ -175,7 +172,7 @@ function combineLatLongForGoogle(eqData) {
     generateCircle(temp, eqData);
 }
 function generateCircle(temp, eqData) {
-    var marker = new google.maps.Circle({
+    circle = new google.maps.Circle({
         strokeColor: '#FF0000',
         strokeOpacity: 0.35,
         strokeWeight: 1,
@@ -191,20 +188,26 @@ function generateCircle(temp, eqData) {
         }
     });
     infowindow = new google.maps.InfoWindow();
-        google.maps.event.addListener(marker, 'click', function () {        
+        google.maps.event.addListener(circle, 'click', function () {
             console.log(this);
             infowindow.setPosition(this.getCenter());
             var eqDataString = 'The Location is: ' + this.data.location + "<br/> Magnitude of: " + this.data.magnitude + "<br/> On this Date: " + this.data.time;
             infowindow.setContent(eqDataString);
             infowindow.open(map, this);
         });
+    createClickHandler(circle, eqData);
+}
 
-    createClickHandler(marker, eqData);
+function clearCircles() {
+    circle = new google.maps.Circle({
+        radius: 0
+
+    });
 }
 
 //------------------------- Twitter Starts ---------------------------------
-function createClickHandler(marker, eqData){
-    marker.addListener('click', clickRemoveExtraText.bind(this, eqData));
+function createClickHandler(circle, eqData){
+    circle.addListener('click', clickRemoveExtraText.bind(this, eqData));
 }
 function clickRemoveExtraText(eqData) {
     var tempLocation = eqData.location;
@@ -218,7 +221,7 @@ function calltwitter(searchWord){
     console.log(searchWord);
     $.ajax({
         data: {
-            search_term: 'earthquake ' + searchWord,
+            search_term: 'earthquake ' + searchWord
         },
         dataType: 'json',
         url: 'http://s-apis.learningfuze.com/hackathon/twitter/index.php?',
