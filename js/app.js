@@ -156,10 +156,11 @@ function generateCircle(temp, location, magnitude) {
         fillOpacity: 0.35,
         center: temp,
         map: map,
-        radius: (magnitude * magnitude) * 10000
+        radius: (magnitude * 25000)
     });
-    infowindow = new google.maps.InfoWindow(magnitude);
-    google.maps.event.addListener(marker, 'click', function (magnitude) {
+    infowindow = new google.maps.InfoWindow();
+    google.maps.event.addListener(marker, 'click', function () {        // HELP!
+        console.log(this);
         infowindow.setPosition(this.getCenter());
         infowindow.setContent('hello'); // Need to change this to show data.
         infowindow.open(map, this);
@@ -173,10 +174,15 @@ function generateCircle(temp, location, magnitude) {
 //}
 //Josh twitter start
 function createClickHandler(marker, location){
-    marker.addListener('click', clickFunction.bind(this, location));
+    marker.addListener('click', clickRemoveExtraText.bind(this, location));
 }
-function clickFunction (location) {
-    calltwitter(location);  
+function clickRemoveExtraText(location) {
+    var tempLocation = location;
+    var stringArray = tempLocation.split(' ');
+    var indexWordOf = stringArray.indexOf("of");
+    var withOutOf = stringArray.slice(indexWordOf + 1);
+    var searchTerm = withOutOf.join(' ');
+    calltwitter(searchTerm);  
 }
 function calltwitter(searchWord){
     console.log(searchWord);
