@@ -102,13 +102,20 @@ $(document).ready(initialize);
 function initialize() {
     mapInit();
     clickHandler();
+    getAddress();
+    $(document).off('ready', initialize);
 }
-
 function clickHandler() {
     $('.btn').click(eqHistoryByDays);
-    $('.glyphicon-search').click(searchSubmitClicked);
+    $('#address').keypress(function(event){
+        if(event.keyCode == 13){
+        getAddress();    
+        event.preventDefault();
+        event.stopPropagation();
+        }
+    });
+    $(".glyphicon-search").click(getAddress);
 }
-
 function eqHistoryByDays() {
     console.log("Working!");
     days_clicked = $(this).val();
@@ -124,35 +131,26 @@ function eqHistoryByDays() {
         current_array = eqArrayMonthM4p5;
     }
     earthquake(current_array);
-
 }
-
-function searchSubmitClicked() {
-    console.log("Search Clicked Working!");
-    //mapInit();
-}
-
-    // var geocoder;
 function mapInit() {
-
-    // Geocoding Start
-    // var coordinates = $('#address').val();
-    // geocoder = new google.maps.Geocoder();
-    // geocoder.geocode({'address': coordinates}, function (results, status) {
-    //     if (status == 'OK'){
-    //         coordinates = results[0].geometry.location;
-    //         // var marker = new google.maps.Marker
-    //     }
-    // });
-    // Geocoding End
-
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 4,
-        center: {lat: 36.778259, lng: -119.417931},
         mapTypeId: 'roadmap'
     });
+    $('.glyphicon-search').click(getAddress);
 }
-
+function getAddress() {
+    var geocoder = new google.maps.Geocoder();
+    var address = $('#address').val();
+    geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == 'OK') {
+            map.setCenter(results[0].geometry.location);
+            earthquake(current_array);
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+        }
+    });
+}
 function earthquake(current_array) {
     var eqData = {};
     for (var i = 0 ; i < current_array.length ; i++) {
