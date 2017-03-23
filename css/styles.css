@@ -38,7 +38,7 @@ body{
 
 /*panel toggle*/
 
-.testPanel {
+.twitterPanel {
 	position: absolute;
 	width: 500px;
 	background-color: #dddddd;
@@ -48,7 +48,7 @@ body{
 	z-index: 1;
 }
 
-.testPanel.on {
+.twitterPanel.on {
 	transform: translateX(0);
 }
 

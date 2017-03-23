@@ -164,7 +164,7 @@ $(document).ready(glyphClick);
 
 function glyphClick() {
     $('.glyphicon-bell').on('click', function(){
-        $('.testPanel').toggleClass('on');
+        $('.twitterPanel').toggleClass('on');
     });
 
     $('.glyphicon-list').on('click', function(){
