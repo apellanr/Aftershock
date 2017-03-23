@@ -21,7 +21,7 @@ function ConstructorUSGS(){
             url: 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson',
             method: 'get',
             success: function(returnResponse){
-                console.log(returnResponse);
+                // console.log(returnResponse);
                 self.sortUSGSWeek(returnResponse);
             },
             error: function(returnResponse){
@@ -35,7 +35,7 @@ function ConstructorUSGS(){
             url: 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_month.geojson',
             method: 'get',
             success: function(returnResponse){
-                console.log(returnResponse);
+                // console.log(returnResponse);
                 self.sortUSGSMonth(returnResponse);
                 earthquake();    // -------------------- Might have to change this later, right it is set to load when the page is loaded.
             },
@@ -50,7 +50,7 @@ function ConstructorUSGS(){
             url: 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson',
             method: 'get',
             success: function(returnResponse){
-                console.log(returnResponse);
+                // console.log(returnResponse);
                 self.sortUSGSDay(returnResponse);
             },
             error: function(returnResponse){
@@ -131,10 +131,12 @@ function earthquake() {
     var lat_val = 0;
     var lng_val = 0;
 
-    for (var i = 0 ; i < eqArrayMonthM4p5.length ; i++) {   // Will have to change the array to a variable.
+    var location = null;
+    for (var i = 0 ; i < eqArrayMonthM4p5.length ; i++) {
         lat_val = eqArrayMonthM4p5[i].lat;
         lng_val = eqArrayMonthM4p5[i].long;
-        combineLatLongForGoogle(lat_val, lng_val);
+        location = eqArrayMonthM4p5[i].location;
+        combineLatLongForGoogle(lat_val, lng_val, location);
     }
 
 
@@ -151,20 +153,63 @@ function earthquake() {
     // }
 }
 
-function combineLatLongForGoogle(lat_val, lng_val) {
-        var temp = {
+function combineLatLongForGoogle(lat_val, lng_val, location) {
+    var temp = {
         lat: lat_val,
         lng: lng_val
     };
-    generateCircle(temp);
+    generateCircle(temp, location);
+    // console.log(temp);
 }
 
-function generateCircle(temp) {
+
+function generateCircle(temp, location) {
     var marker = new google.maps.Marker({
         position: temp,
         map: map
     });
+    createClickHandler(marker, location);
+
 }
+
+//Josh twitter start
+function createClickHandler(marker, location){
+	marker.addListener('click', funk.bind(this, location));
+}
+
+function funk (location) {
+   	calltwitter(location);	
+}
+
+function calltwitter(searchWord){
+	console.log(searchWord);
+
+    $.ajax({
+    	data: {
+    		search_term: 'earthquake ' + searchWord,
+    	},
+    	dataType: 'json',
+        url: 'http://s-apis.learningfuze.com/hackathon/twitter/index.php?',
+        method: 'post',
+        success: function(returnResponse){
+            console.log('works kinda: ', returnResponse);
+            getTweets(returnResponse);
+        },
+        error: function(returnResponse){
+            // self.displayServerModal('Delete Error: ' + returnResponse.responseText, "Status Code: " + returnResponse.status);
+            console.log('error ', returnResponse);
+        }
+    })
+}
+function getTweets(returnResponse){
+	for(var i = 0; i < returnResponse.tweets.statuses.length; i++){
+		console.log(returnResponse.tweets.statuses[i].text);
+		//ryan this is where you append to the dom or you can make a function
+	}
+}
+
+
+//Josh twitter end
 
 // function search() {
 //     var searchInput = $('#search');
@@ -286,5 +331,7 @@ function glyphClick() {
 
 //---------------- USGS Data Starts ----------------
 
+
 console.log(eqArrayMonthM4p5);
+
 
