@@ -19,6 +19,11 @@ html, body,{
 	margin-bottom: 0;
 }
 
+.navbar-brand {
+	font-size: 3.5vmin;
+	font-family: earthquakefont;
+}
+
 body{
 	background-color: lavender;
 }
@@ -27,19 +32,18 @@ body{
 	font-size: 2vmin;
 }
 
-.navbar-brand {
-	font-size: 3.5vmin;
-	font-family: earthquakefont;
+.marker {
+	top: 7px;
 }
 
 /*panel toggle*/
 
 .testPanel {
 	position: absolute;
-	width: 400px;
+	width: 500px;
 	background-color: #dddddd;
 	height: 100vh;
-	transform: translateX(-400px);
+	transform: translateX(-500px);
 	transition: all .2s;
 	z-index: 1;
 }
