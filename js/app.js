@@ -102,17 +102,6 @@ $(document).ready(initialize);
 function initialize() {
     mapInit();
     clickHandler();
-
-    // $('#1day').on('click', function(){
-    //     current_array = eqArrayDayM4p5;
-    // });
-    // $('#7day').on('click', function(){
-    //     current_array = eqArrayWeekM4p5;
-    // });
-    // $('#30day').on('click', function(){
-    //     current_array = eqArrayMonthM4p5;
-    // });
-    // daysClicked(current_array);
 }
 
 function clickHandler() {
@@ -125,6 +114,7 @@ function eqHistoryByDays() {
     days_clicked = $(this).val();
     if (days_clicked == 1) {
         current_array = eqArrayDayM4p5;
+
     }
     else if (days_clicked == 7){
         current_array = eqArrayWeekM4p5;
@@ -133,8 +123,8 @@ function eqHistoryByDays() {
     else {
         current_array = eqArrayMonthM4p5;
     }
-
     earthquake(current_array);
+
 }
 
 function searchSubmitClicked() {
@@ -142,15 +132,19 @@ function searchSubmitClicked() {
     //mapInit();
 }
 
+    // var geocoder;
 function mapInit() {
-    var coordinates = $('#address').val();
-    geocoder = new google.maps.Geocoder();
-    geocoder.geocode({'address': coordinates}, function (results, status) {
-        if (status == 'OK'){
-            coordinates = results[0].geometry.location;
-            // var marker = new google.maps.Marker
-        }
-    });
+
+    // Geocoding Start
+    // var coordinates = $('#address').val();
+    // geocoder = new google.maps.Geocoder();
+    // geocoder.geocode({'address': coordinates}, function (results, status) {
+    //     if (status == 'OK'){
+    //         coordinates = results[0].geometry.location;
+    //         // var marker = new google.maps.Marker
+    //     }
+    // });
+    // Geocoding End
 
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 4,
@@ -159,32 +153,15 @@ function mapInit() {
     });
 }
 
-
-
-// var geocoder;
-// function getCoordinates() {
-//     var coordinates = $('#address').val();
-//     geocoder.geocode({'address': coordinates}, function (results, status) {
-//         if (status == 'OK'){
-//             coordinates = results[0].geometry.location;
-//             // var marker = new google.maps.Marker
-//         }
-//     })
-// }
-
 function earthquake(current_array) {
-    var lat_val = 0;
-    var lng_val = 0;
-    var location = null;
-    var magnitude = null;
     var eqData = {};
-    for (var i = 0 ; i < eqArrayMonthM4p5.length ; i++) {
+    for (var i = 0 ; i < current_array.length ; i++) {
         eqData = {
-            lat_val: eqArrayMonthM4p5[i].lat,
-            lng_val: eqArrayMonthM4p5[i].long,
-            location: eqArrayMonthM4p5[i].location,
-            magnitude: eqArrayMonthM4p5[i].mag.toString(),
-            time: eqArrayMonthM4p5[i].time
+            lat_val: current_array[i].lat,
+            lng_val: current_array[i].long,
+            location: current_array[i].location,
+            magnitude: current_array[i].mag.toString(),
+            time: current_array[i].time
         };
         combineLatLongForGoogle(eqData);
     }
@@ -196,7 +173,6 @@ function combineLatLongForGoogle(eqData) {
         lng: eqData.lng_val
     };
     generateCircle(temp, eqData);
-    // console.log(temp);
 }
 function generateCircle(temp, eqData) {
     var marker = new google.maps.Circle({
@@ -219,14 +195,14 @@ function generateCircle(temp, eqData) {
             console.log(this);
             infowindow.setPosition(this.getCenter());
             var eqDataString = 'The Location is: ' + this.data.location + "<br/> Magnitude of: " + this.data.magnitude + "<br/> On this Date: " + this.data.time;
-            infowindow.setContent(eqDataString); // Need to change this to show data.
+            infowindow.setContent(eqDataString);
             infowindow.open(map, this);
         });
 
     createClickHandler(marker, eqData);
 }
-//------------------------- Twitter Starts ---------------------------------
 
+//------------------------- Twitter Starts ---------------------------------
 function createClickHandler(marker, eqData){
     marker.addListener('click', clickRemoveExtraText.bind(this, eqData));
 }
@@ -252,7 +228,6 @@ function calltwitter(searchWord){
             getTweets(returnResponse);
         },
         error: function(returnResponse){
-            // self.displayServerModal('Delete Error: ' + returnResponse.responseText, "Status Code: " + returnResponse.status);
             console.log('error ', returnResponse);
         }
     })
