@@ -21,7 +21,7 @@ function ConstructorUSGS(){
             url: 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson',
             method: 'get',
             success: function(returnResponse){
-                console.log(returnResponse);
+                // console.log(returnResponse);
                 self.sortUSGSWeek(returnResponse);
             },
             error: function(returnResponse){
@@ -35,9 +35,9 @@ function ConstructorUSGS(){
             url: 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_month.geojson',
             method: 'get',
             success: function(returnResponse){
-                console.log(returnResponse);
+                // console.log(returnResponse);
                 self.sortUSGSMonth(returnResponse);
-                //earthquake();    // -------------------- Might have to change this later, right it is set to load when the page is loaded.
+                earthquake();    // -------------------- Might have to change this later, right it is set to load when the page is loaded.
             },
             error: function(returnResponse){
                 self.displayServerModal('Delete Error: ' + returnResponse.responseText, "Status Code: " + returnResponse.status);
@@ -50,7 +50,7 @@ function ConstructorUSGS(){
             url: 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson',
             method: 'get',
             success: function(returnResponse){
-                console.log(returnResponse);
+                // console.log(returnResponse);
                 self.sortUSGSDay(returnResponse);
             },
             error: function(returnResponse){
@@ -99,7 +99,7 @@ function ConstructorUSGS(){
 }
 
 // Jinwoo end
-var marker = [];
+
 var map;
 var infowindow;
 var request;
@@ -110,43 +110,138 @@ $(document).ready(initialize);
 
 function initialize() {
     mapInit();
-    console.log("2");
 }
 
 function mapInit() {
+
+    geocoder = new google.maps.Geocoder(); // initalizer function
+
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 7,
+        zoom: 4,
         center: {lat: 36.778259, lng: -119.417931},
         mapTypeId: 'roadmap'
     });
+
+
+}
+
+
+var geocoder;
+
+
+function getCoordinates() {
+
+    var coordinates = $('#address').val();
+    geocoder.geocode({'address': coordinates}, function (results, status) {
+        if (status == 'OK'){
+            coordinates = results[0].geometry.location;
+            // var marker = new google.maps.Marker
+        }
+
+    })
+}
+
+//radio checked
+function radioInput() {
+    $('input').on('click', function(){})
 }
 
 function earthquake() {
-    // console.log("1");
     var lat_val = 0;
     var lng_val = 0;
-    for (var i = 0 ; i < eqArrayMonthM4p5.length ; i++) {   // Will have to change the array to a variable.
+
+    var location = null;
+    for (var i = 0 ; i < eqArrayMonthM4p5.length ; i++) {
         lat_val = eqArrayMonthM4p5[i].lat;
         lng_val = eqArrayMonthM4p5[i].long;
-        combineLatLongForGoogle(lat_val, lng_val);
+        location = eqArrayMonthM4p5[i].location;
+        combineLatLongForGoogle(lat_val, lng_val, location);
     }
-
 }
 
-function combineLatLongForGoogle(lat_val, lng_val) {
-        var temp = {
+function combineLatLongForGoogle(lat_val, lng_val, location) {
+    var temp = {
         lat: lat_val,
         lng: lng_val
     };
-    generateCircle(temp);
+    generateCircle(temp, location);
+    // console.log(temp);
 }
 
-function generateCircle(temp) {
-    marker = new google.maps.Marker({
+function generateCircle(temp, location) {
+    var marker = new google.maps.Marker({
         position: temp,
         map: map
     });
+
+    infowindow = new google.maps.InfoWindow();
+    google.maps.event.addListener(marker, 'click', function () {
+        infowindow.setContent("Hi"); // Need to change this to show data.
+        infowindow.open(map, this);
+    });
+    createClickHandler(marker, location);
+    return marker;
 }
+
+
+//function locationLookup() {
+//   address = new LocationConstruct();
+//    createClickHandler(marker, location);
+
+//}
+
+//Josh twitter start
+function createClickHandler(marker, location){
+	marker.addListener('click', funk.bind(this, location));
+}
+
+function funk (location) {
+   	calltwitter(location);	
+}
+
+function calltwitter(searchWord){
+	console.log(searchWord);
+
+    $.ajax({
+    	data: {
+    		search_term: 'earthquake ' + searchWord,
+    	},
+    	dataType: 'json',
+        url: 'http://s-apis.learningfuze.com/hackathon/twitter/index.php?',
+        method: 'post',
+        success: function(returnResponse){
+            console.log('works kinda: ', returnResponse);
+            getTweets(returnResponse);
+        },
+        error: function(returnResponse){
+            // self.displayServerModal('Delete Error: ' + returnResponse.responseText, "Status Code: " + returnResponse.status);
+            console.log('error ', returnResponse);
+        }
+    })
+}
+function getTweets(returnResponse){
+	for(var i = 0; i < returnResponse.tweets.statuses.length; i++){
+		console.log(returnResponse.tweets.statuses[i].text);
+		//ryan this is where you append to the dom or you can make a function
+	}
+}
+
+
+//Josh twitter end
+
+// open panel functions
+$(document).ready(glyphClick);
+
+function glyphClick() {
+    $('.glyphicon-bell').on('click', function(){
+        $('.testPanel').toggleClass('on');
+    });
+
+    $('.glyphicon-list').on('click', function(){
+        $('.rightPanel').toggleClass('on');
+    });
+}
+
 
 
 
@@ -197,7 +292,7 @@ function generateCircle(temp) {
  // types: ['food'] // Change this
  };
 
- infowindow = new google.maps.InfoWindow();
+
 
  service = new google.maps.places.PlacesService(map);
  service.nearbySearch(request, callback);
@@ -220,22 +315,8 @@ function generateCircle(temp) {
  for (var i = 0 ; i < results.length ; i++) {
  markers.push(createMarker(results[i]));
  }
- }
- }
 
- function createMarker(place) {
- var placeLoc = place.geometry.location;
- var marker = new google.maps.Marker({
- map: map,
- position: place.geometry.location
- });
 
- google.maps.event.addListener(marker, 'click', function () {
- infowindow.setContent(place.name);
- infowindow.open(map, this);
- });
- return marker;
- }
 
  function clearResults(markers) {
  for (var m in markers) {
@@ -246,9 +327,5 @@ function generateCircle(temp) {
 
  */
 
-//---------------- Google Maps Ends ----------------
 
-//---------------- USGS Data Starts ----------------
-
-console.log(eqArrayMonthM4p5);
 
