@@ -190,26 +190,47 @@ function calltwitter(searchWord) {
         }
     })
 }
+
 function getTweets(returnResponse) {
     for (var i = 0; i < returnResponse.tweets.statuses.length; i++) {
-        console.log(returnResponse.tweets.statuses[i].text);
-        var hello = returnResponse.tweets.statuses[i].text;
-        $('#twitterFeed').append("<p>" + hello + "</p>").css("");
+        var $screenName = returnResponse.tweets.statuses[i].user.screen_name;
+        var $hello = returnResponse.tweets.statuses[i].text;
+        var $row = $('<div>').addClass('row');
+        var $imgContainer = $('<div>').addClass('col-xs-2 imgLogo');
+        var $imgDiv = $('<div>').addClass('imgtweet');
+        var $imgLogo = $('<img>').addClass('imgSource').attr('src', 'css/twitterlogo.png');
+        var $twitterFeed = $('<div>').addClass('col-xs-10 twitterFeed');
+        $($imgDiv).append($imgLogo);
+        $($imgContainer).append($imgDiv);
+        $($twitterFeed).append($screenName, $hello);
+        $($row).append($imgContainer, $twitterFeed);
+        $('.panel-body').append($row);
 
-        //ryan this is where you append to the dom or you can make a function
+        // var $logos = returnResponse.tweets.statuses[i].entities.urls[2].url;
+        // var $p = $('<p>').addClass('twitterContent');
+        // $($p).append($screenName, $hello);
+
+        // $('.panel-body').append("<div>".addClass("row") + $screenName +"<div>".addClass("col-xs-2 imgLogo") + $hello + "</div>" +"</div>");
     }
 }
 
-function
+//     <div class="row">
+//     <div class="col-xs-2 imgLogo">
+//     <img src="css/twitterlogo.png" class="img-rounded" style="width: 4vmin; height: 4vmin">
+//     </div>
+//     <div class="col-xs-10 twitterFeed">
+//
+//     </div>
+//     </div>
 
 // open panel functions
 $(document).ready(glyphClick);
 function glyphClick() {
     $('.glyphicon-bell').on('click', function () {
-        $('.testPanel').toggleClass('on');
+        $('.rightPanel').toggleClass('on');
     });
     $('.glyphicon-list').on('click', function () {
-        $('.rightPanel').toggleClass('on');
+        $('.testPanel').toggleClass('on');
     });
 }
 
