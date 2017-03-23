@@ -37,6 +37,7 @@ function ConstructorUSGS(){
             success: function(returnResponse){
                 console.log(returnResponse);
                 self.sortUSGSMonth(returnResponse);
+                earthquake();    // -------------------- Might have to change this later, right it is set to load when the page is loaded.
             },
             error: function(returnResponse){
                 self.displayServerModal('Delete Error: ' + returnResponse.responseText, "Status Code: " + returnResponse.status);
@@ -94,8 +95,9 @@ function ConstructorUSGS(){
             var depth = returnResponse.features[i].geometry.coordinates[2];
             eqArrayDayM4p5.push({location, mag, time, lat, long, depth});
         }
-    }
+    };
 }
+
 // Jinwoo end
 
 var map;
@@ -108,7 +110,7 @@ $(document).ready(initialize);
 
 function initialize() {
     mapInit();
-    earthquake();
+    console.log("2");
 }
 
 function mapInit() {
@@ -120,9 +122,10 @@ function mapInit() {
 }
 
 function earthquake() {
+    console.log("1");
     var lat_val = 0;
     var lng_val = 0;
-    for (var i = 0 ; i < eqArrayMonthM4p5.length ; i++) {
+    for (var i = 0 ; i < eqArrayMonthM4p5.length ; i++) {   // Will have to change the array to a variable.
         lat_val = eqArrayMonthM4p5[i].lat;
         lng_val = eqArrayMonthM4p5[i].long;
         combineLatLongForGoogle(lat_val, lng_val);
@@ -130,16 +133,13 @@ function earthquake() {
 
 }
 
-
 function combineLatLongForGoogle(lat_val, lng_val) {
-    var temp = {
+        var temp = {
         lat: lat_val,
         lng: lng_val
     };
     generateCircle(temp);
-    console.log(temp);
 }
-
 
 function generateCircle(temp) {
     var marker = new google.maps.Marker({
