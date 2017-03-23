@@ -259,9 +259,6 @@ function getTweets(returnResponse) {
 }
 //------------------------- Twitter Ends ---------------------------------
 
-// open panel functions
-// $(document).ready();
-
 function panelTransitions() {
     $('.glyphicon-bell').on('click', function () {
         $('.rightPanel').toggleClass('on');
@@ -269,13 +266,7 @@ function panelTransitions() {
     $('.glyphicon-list').on('click', function () {
         $('.testPanel').toggleClass('on');
     });
-
-    $('#message1').toggleClass('in');
 }
-
-
-
-
 
 // ---------- Reset ---------------
 function reset(){
