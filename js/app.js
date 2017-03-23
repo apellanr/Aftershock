@@ -5,6 +5,7 @@ var usgsData = null;
 var eqArrayWeekM4p5 = [];
 var eqArrayMonthM4p5 = [];
 var eqArrayDayM4p5 = [];
+var current_array;
 //global var
 function startUSGS(){
     usgsData = new ConstructorUSGS;
@@ -35,7 +36,7 @@ function ConstructorUSGS(){
             success: function(returnResponse){
                 // console.log(returnResponse);
                 self.sortUSGSMonth(returnResponse);
-                earthquake();    // -------------------- Might have to change this later, right it is set to load when the page is loaded.
+                //earthquake();    // -------------------- Might have to change this later, right it is set to load when the page is loaded.
             },
             error: function(returnResponse){
                 self.displayServerModal('Delete Error: ' + returnResponse.responseText, "Status Code: " + returnResponse.status);
@@ -100,9 +101,21 @@ var infowindow;
 var request;
 var service;
 var markers = [];
+var array_dropdown;
+
 $(document).ready(initialize);
 function initialize() {
     mapInit();
+    $('#1day').on('click', function(){
+        current_array = eqArrayDayM4p5;
+    });
+    $('#7day').on('click', function(){
+        current_array = eqArrayWeekM4p5;
+    });
+    $('#30day').on('click', function(){
+        current_array = eqArrayMonthM4p5;
+    });
+    daysClicked(current_array)
 }
 function mapInit() {
     geocoder = new google.maps.Geocoder(); // initalizer function
@@ -122,18 +135,19 @@ function getCoordinates() {
         }
     })
 }
-//radio checked
-function radioInput() {
-    $('input').on('click', function(){})
+
+function daysClicked(current_array) {
+    earthquake(current_array);
 }
-function earthquake() {
+
+function earthquake(current_array) {
     var lat_val = 0;
     var lng_val = 0;
     var location = null;
-    for (var i = 0 ; i < eqArrayMonthM4p5.length ; i++) {
-        lat_val = eqArrayMonthM4p5[i].lat;
-        lng_val = eqArrayMonthM4p5[i].long;
-        location = eqArrayMonthM4p5[i].location;
+    for (var i = 0 ; i < current_array.length ; i++) {
+        lat_val = current_array[i].lat;
+        lng_val = current_array[i].long;
+        location = current_array[i].location;
         combineLatLongForGoogle(lat_val, lng_val, location);
     }
 }
