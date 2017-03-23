@@ -7,12 +7,13 @@ var eqArrayDayM4p5 = [];
 var current_array = eqArrayMonthM4p5;
 
 function startUSGS(){
+
     usgsData = new ConstructorUSGS;
     usgsData.getUSGSWeek();
     usgsData.getUSGSMonth();
     usgsData.getUSGSDay();
 }
-function ConstructorUSGS(){
+function ConstructorUSGS() {
     var self = this;
     this.getUSGSWeek= function(){
         $.ajax({
@@ -21,13 +22,13 @@ function ConstructorUSGS(){
             success: function(returnResponse){
                 self.sortUSGSWeek(returnResponse);
             },
-            error: function(returnResponse){
+            error: function (returnResponse) {
                 self.displayServerModal('Delete Error: ' + returnResponse.responseText, "Status Code: " + returnResponse.status);
                 console.log('error ', returnResponse);
             }
         });
     };
-    this.getUSGSMonth = function(){
+    this.getUSGSMonth = function () {
         $.ajax({
             url: 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_month.geojson',
             method: 'get',
@@ -35,26 +36,26 @@ function ConstructorUSGS(){
                 self.sortUSGSMonth(returnResponse);
                // earthquake();    // -------------------- Might have to change this later, right it is set to load when the page is loaded.
             },
-            error: function(returnResponse){
+            error: function (returnResponse) {
                 self.displayServerModal('Delete Error: ' + returnResponse.responseText, "Status Code: " + returnResponse.status);
                 console.log('error ', returnResponse);
             }
         })
     };
-    this.getUSGSDay = function(){
+    this.getUSGSDay = function () {
         $.ajax({
             url: 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson',
             method: 'get',
             success: function(returnResponse){
                 self.sortUSGSDay(returnResponse);
             },
-            error: function(returnResponse){
+            error: function (returnResponse) {
                 self.displayServerModal('Delete Error: ' + returnResponse.responseText, "Status Code: " + returnResponse.status);
                 console.log('error ', returnResponse);
             }
         })
     };
-    this.sortUSGSWeek = function(returnResponse){
+    this.sortUSGSWeek = function (returnResponse) {
         for (var i = 0; i < returnResponse.features.length; i++) {
             var location = returnResponse.features[i].properties.place;
             var mag = returnResponse.features[i].properties.mag;
@@ -66,7 +67,7 @@ function ConstructorUSGS(){
             eqArrayWeekM4p5.push({location, mag, time, lat, long, depth});
         }
     };
-    this.sortUSGSMonth = function(returnResponse){
+    this.sortUSGSMonth = function (returnResponse) {
         for (var i = 0; i < returnResponse.features.length; i++) {
             var location = returnResponse.features[i].properties.place;
             var mag = returnResponse.features[i].properties.mag;
@@ -78,6 +79,7 @@ function ConstructorUSGS(){
             eqArrayMonthM4p5.push({location, mag, time, lat, long, depth});
         }
     };
+
     this.sortUSGSDay = function(returnResponse){
         for(var i = 0; i <   returnResponse.features.length; i++){
             var location = returnResponse.features[i].properties.place;
@@ -165,12 +167,14 @@ function earthquake(current_array) {
     }
 }
 function combineLatLongForGoogle(eqData) {
+
     var temp = {
         lat: eqData.lat_val,
         lng: eqData.lng_val
     };
     generateCircle(temp, eqData);
 }
+
 function generateCircle(temp, eqData) {
     circle = new google.maps.Circle({
         strokeColor: '#FF0000',
@@ -186,6 +190,7 @@ function generateCircle(temp, eqData) {
             location: eqData.location,
             time: eqData.time
         }
+
     });
     infowindow = new google.maps.InfoWindow();
         google.maps.event.addListener(circle, 'click', function () {
@@ -226,7 +231,7 @@ function calltwitter(searchWord){
         dataType: 'json',
         url: 'http://s-apis.learningfuze.com/hackathon/twitter/index.php?',
         method: 'post',
-        success: function(returnResponse){
+        success: function (returnResponse) {
             console.log('works kinda: ', returnResponse);
             getTweets(returnResponse);
         },
@@ -235,10 +240,20 @@ function calltwitter(searchWord){
         }
     })
 }
-function getTweets(returnResponse){
-    for(var i = 0; i < returnResponse.tweets.statuses.length; i++){
-        console.log(returnResponse.tweets.statuses[i].text);
-        //ryan this is where you append to the dom or you can make a function
+function getTweets(returnResponse) {
+    for (var i = 0; i < returnResponse.tweets.statuses.length; i++) {
+        var $screenName = returnResponse.tweets.statuses[i].user.screen_name;
+        var $hello = returnResponse.tweets.statuses[i].text;
+        var $row = $('<div>').addClass('row');
+        var $imgContainer = $('<div>').addClass('col-xs-2 imgLogo');
+        var $imgDiv = $('<div>').addClass('imgtweet');
+        var $imgLogo = $('<img>').addClass('imgSource').attr('src', 'css/twitterlogo.png');
+        var $twitterFeed = $('<div>').addClass('col-xs-10 twitterFeed');
+        $($imgDiv).append($imgLogo);
+        $($imgContainer).append($imgDiv);
+        $($twitterFeed).append($screenName, $hello);
+        $($row).append($imgContainer, $twitterFeed);
+        $('#twitter').append($row);
     }
 }
 //------------------------- Twitter Ends ---------------------------------
@@ -246,11 +261,11 @@ function getTweets(returnResponse){
 // open panel functions
 $(document).ready(glyphClick);
 function glyphClick() {
-    $('.glyphicon-bell').on('click', function(){
-        $('.testPanel').toggleClass('on');
-    });
-    $('.glyphicon-list').on('click', function(){
+    $('.glyphicon-bell').on('click', function () {
         $('.rightPanel').toggleClass('on');
+    });
+    $('.glyphicon-info-sign').on('click', function () {
+        $('.testPanel').toggleClass('on');
     });
 }
 
