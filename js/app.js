@@ -134,7 +134,7 @@ function eqHistoryByDays() {
 }
 function mapInit() {
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 4,
+        zoom: 2,
         mapTypeId: 'roadmap'
     });
     $('.glyphicon-search').click(getAddress);
@@ -161,7 +161,12 @@ function earthquake(current_array) {
             magnitude: current_array[i].mag.toString(),
             time: current_array[i].time
         };
-        combineLatLongForGoogle(eqData);
+        setTimeout((function(eqData){
+            return function(){ 
+                combineLatLongForGoogle(eqData);
+            }
+        })(eqData), 25000 * (current_array.length - i) / current_array.length)
+//        combineLatLongForGoogle(eqData);
     }
 }
 function combineLatLongForGoogle(eqData) {
@@ -188,11 +193,9 @@ function generateCircle(temp, eqData) {
             location: eqData.location,
             time: eqData.time
         }
-
     });
     infowindow = new google.maps.InfoWindow();
         google.maps.event.addListener(circle, 'click', function () {
-            console.log(this);
             infowindow.setPosition(this.getCenter());
             var eqDataString = 'The Location is: ' + this.data.location + "<br/> Magnitude of: " + this.data.magnitude + "<br/> On this Date: " + this.data.time;
             infowindow.setContent(eqDataString);
@@ -204,10 +207,8 @@ function generateCircle(temp, eqData) {
 function clearCircles() {
     circle = new google.maps.Circle({
         radius: 0
-
     });
 }
-
 //------------------------- Twitter Starts ---------------------------------
 function createClickHandler(circle, eqData){
     circle.addListener('click', clickRemoveExtraText.bind(this, eqData));
@@ -221,7 +222,6 @@ function clickRemoveExtraText(eqData) {
     calltwitter(searchTerm);
 }
 function calltwitter(searchWord){
-    console.log(searchWord);
     $.ajax({
         data: {
             search_term: 'earthquake ' + searchWord
@@ -230,7 +230,6 @@ function calltwitter(searchWord){
         url: 'http://s-apis.learningfuze.com/hackathon/twitter/index.php?',
         method: 'post',
         success: function (returnResponse) {
-            console.log('works kinda: ', returnResponse);
             getTweets(returnResponse);
         },
         error: function(returnResponse){
