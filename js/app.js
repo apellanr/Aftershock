@@ -104,6 +104,7 @@ $(document).ready(initialize);
 function initialize() {
     mapInit();
     clickHandler();
+    panelTransitions();
 }
 
 function clickHandler() {
@@ -259,15 +260,22 @@ function getTweets(returnResponse) {
 //------------------------- Twitter Ends ---------------------------------
 
 // open panel functions
-$(document).ready(glyphClick);
-function glyphClick() {
+// $(document).ready();
+
+function panelTransitions() {
     $('.glyphicon-bell').on('click', function () {
         $('.rightPanel').toggleClass('on');
     });
     $('.glyphicon-list').on('click', function () {
         $('.testPanel').toggleClass('on');
     });
+
+    $('#message1').toggleClass('in');
 }
+
+
+
+
 
 // ---------- Reset ---------------
 function reset(){
