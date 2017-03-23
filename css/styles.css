@@ -5,8 +5,8 @@ html, body,{
 }
 
 #map {
-	position: ;
 	height: 100%;
+	position: static !important;
 }
 
 @font-face {
@@ -32,4 +32,34 @@ body{
 	font-family: earthquakefont;
 }
 
+/*panel toggle*/
 
+.testPanel {
+	position: absolute;
+	width: 400px;
+	background-color: #dddddd;
+	height: 100vh;
+	transform: translateX(-400px);
+	transition: all .2s;
+	z-index: 1;
+}
+
+.testPanel.on {
+	transform: translateX(0);
+}
+
+.rightPanel {
+	top: 54px;
+	right: 0;
+	position: absolute;
+	width: 500px;
+	background-color: #dddddd;
+	height: 100vh;
+	transform: translateX(500px);
+	transition: all .3s;
+	z-index: 2;
+}
+
+.rightPanel.on {
+	transform: translateX(0);
+}

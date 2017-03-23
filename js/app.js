@@ -115,19 +115,25 @@ function mapInit() {
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 7,
         center: {lat: 36.778259, lng: -119.417931},
-        mapTypeId: 'terrain'
+        mapTypeId: 'roadmap'
     });
 }
 
-function earthquake() {
-    var lat_val = 0;
-    var lng_val = 0;
-    for (var i = 0 ; i < eqArray30DaysM4p5.length ; i++) {
-        lat_val = eqArray30DaysM4p5[i].lat;
-        lng_val = eqArray30DaysM4p5[i].long;
-        combineLatLongForGoogle(lat_val, lng_val);
-    }
+//radio checked
+function radioInput() {
+    $('input').on('click', function(){
 
+    });
+}
+//
+function earthquake() {
+    // var lat_val = 0;
+    // var lng_val = 0;
+    // for (var i = 0 ; i < eqArray30DaysM4p5.length; i++) {
+    //     // lat_val = eqArray30DaysM4p5[i].lat;
+    //     // lng_val = eqArray30DaysM4p5[i].long;
+    //     combineLatLongForGoogle(lat_val, lng_val);
+    // }
 }
 
 function combineLatLongForGoogle(lat_val, lng_val) {
@@ -147,16 +153,24 @@ function generateCircle(temp) {
     });
 }
 
-
-// 1 month selection radio button
-
-function oneMonthSelector() {
-    $('button').click()
-}
+// function search() {
+//     var searchInput = $('#search');
+//     var autocomplete = new google.maps.places.Autocomplete(searchInput);
+// }
 
 
 // open panel functions
+$(document).ready(glyphClick);
 
+function glyphClick() {
+    $('.glyphicon-bell').on('click', function(){
+        $('.testPanel').toggleClass('on');
+    });
+
+    $('.glyphicon-list').on('click', function(){
+        $('.rightPanel').toggleClass('on');
+    });
+}
 
 
 
@@ -259,5 +273,5 @@ function oneMonthSelector() {
 
 //---------------- USGS Data Starts ----------------
 
-console.log(eqArray30DaysM4p5);
+// console.log(eqArray30DaysM4p5);
 
