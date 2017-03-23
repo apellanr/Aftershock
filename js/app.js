@@ -1,12 +1,11 @@
-// jinwoo start
 $().ready(startUSGS);
-//global var
+
 var usgsData = null;
 var eqArrayWeekM4p5 = [];
 var eqArrayMonthM4p5 = [];
 var eqArrayDayM4p5 = [];
-var current_array;
-//global var
+var current_array = eqArrayMonthM4p5;
+
 function startUSGS(){
     usgsData = new ConstructorUSGS;
     usgsData.getUSGSWeek();
@@ -20,7 +19,6 @@ function ConstructorUSGS(){
             url: 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson',
             method: 'get',
             success: function(returnResponse){
-                // console.log(returnResponse);
                 self.sortUSGSWeek(returnResponse);
             },
             error: function(returnResponse){
@@ -34,9 +32,8 @@ function ConstructorUSGS(){
             url: 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_month.geojson',
             method: 'get',
             success: function(returnResponse){
-                // console.log(returnResponse);
                 self.sortUSGSMonth(returnResponse);
-                //earthquake();    // -------------------- Might have to change this later, right it is set to load when the page is loaded.
+               // earthquake();    // -------------------- Might have to change this later, right it is set to load when the page is loaded.
             },
             error: function(returnResponse){
                 self.displayServerModal('Delete Error: ' + returnResponse.responseText, "Status Code: " + returnResponse.status);
@@ -49,7 +46,6 @@ function ConstructorUSGS(){
             url: 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson',
             method: 'get',
             success: function(returnResponse){
-                // console.log(returnResponse);
                 self.sortUSGSDay(returnResponse);
             },
             error: function(returnResponse){
@@ -95,50 +91,86 @@ function ConstructorUSGS(){
         }
     };
 }
-// Jinwoo end
+
 var map;
 var infowindow;
 var request;
 var service;
 var markers = [];
-var array_dropdown;
 
 $(document).ready(initialize);
 function initialize() {
     mapInit();
-    $('#1day').on('click', function(){
-        current_array = eqArrayDayM4p5;
-    });
-    $('#7day').on('click', function(){
-        current_array = eqArrayWeekM4p5;
-    });
-    $('#30day').on('click', function(){
-        current_array = eqArrayMonthM4p5;
-    });
-    daysClicked(current_array)
+    clickHandler();
+
+    // $('#1day').on('click', function(){
+    //     current_array = eqArrayDayM4p5;
+    // });
+    // $('#7day').on('click', function(){
+    //     current_array = eqArrayWeekM4p5;
+    // });
+    // $('#30day').on('click', function(){
+    //     current_array = eqArrayMonthM4p5;
+    // });
+    // daysClicked(current_array);
 }
+
+function clickHandler() {
+    $('.btn').click(eqHistoryByDays);
+    $('.glyphicon-search').click(searchSubmitClicked);
+}
+
+function eqHistoryByDays() {
+    console.log("Working!");
+    days_clicked = $(this).val();
+    if (days_clicked == 1) {
+        current_array = eqArrayDayM4p5;
+    }
+    else if (days_clicked == 7){
+        current_array = eqArrayWeekM4p5;
+
+    }
+    else {
+        current_array = eqArrayMonthM4p5;
+    }
+
+    earthquake(current_array);
+}
+
+function searchSubmitClicked() {
+    console.log("Search Clicked Working!");
+    //mapInit();
+}
+
 function mapInit() {
-    geocoder = new google.maps.Geocoder(); // initalizer function
+    var coordinates = $('#address').val();
+    geocoder = new google.maps.Geocoder();
+    geocoder.geocode({'address': coordinates}, function (results, status) {
+        if (status == 'OK'){
+            coordinates = results[0].geometry.location;
+            // var marker = new google.maps.Marker
+        }
+    });
+
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 4,
         center: {lat: 36.778259, lng: -119.417931},
         mapTypeId: 'roadmap'
     });
 }
-var geocoder;
-function getCoordinates() {
-    var coordinates = $('#address').val();
-    geocoder.geocode({'address': coordinates}, function (results, status) {
-        if (status == 'OK'){
-            coordinates = results[0].geometry.location;
-            // var marker = new google.maps.Marker
-        }
-    })
-}
 
-function daysClicked(current_array) {
-    earthquake(current_array);
-}
+
+
+// var geocoder;
+// function getCoordinates() {
+//     var coordinates = $('#address').val();
+//     geocoder.geocode({'address': coordinates}, function (results, status) {
+//         if (status == 'OK'){
+//             coordinates = results[0].geometry.location;
+//             // var marker = new google.maps.Marker
+//         }
+//     })
+// }
 
 function earthquake(current_array) {
     var lat_val = 0;
@@ -157,7 +189,6 @@ function combineLatLongForGoogle(lat_val, lng_val, location) {
         lng: lng_val
     };
     generateCircle(temp, location);
-    // console.log(temp);
 }
 function generateCircle(temp, location) {
     var marker = new google.maps.Marker({
@@ -172,11 +203,8 @@ function generateCircle(temp, location) {
     createClickHandler(marker, location);
     return marker;
 }
-//function locationLookup() {
-//   address = new LocationConstruct();
-//    createClickHandler(marker, location);
-//}
-//Josh twitter start
+
+//------------------------- Twitter Starts ---------------------------------
 function createClickHandler(marker, location){
     marker.addListener('click', funk.bind(this, location));
 }
@@ -208,7 +236,8 @@ function getTweets(returnResponse){
         //ryan this is where you append to the dom or you can make a function
     }
 }
-//Josh twitter end
+//------------------------- Twitter Ends ---------------------------------
+
 // open panel functions
 $(document).ready(glyphClick);
 function glyphClick() {
@@ -219,66 +248,8 @@ function glyphClick() {
         $('.rightPanel').toggleClass('on');
     });
 }
-// Create a <script> tag and set the USGS URL as the source.
-//  var script = document.createElement('script');
-// This example uses a local copy of the GeoJSON stored at
-// http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojsonp
-// script.src = 'https://developers.google.com/maps/documentation/javascript/examples/json/earthquake_GeoJSONP.js';
-//  document.getElementsByTagName('head')[0].appendChild(script);
-/*
- map.data.setStyle(function(feature) {
- var magnitude = feature.getProperty('mag');
- return {
- icon: getCircle(magnitude)
- };
- });
- }
- function getCircle(magnitude) {
- return {
- path: google.maps.SymbolPath.CIRCLE,
- fillColor: 'red',
- fillOpacity: .2,
- scale: Math.pow(2, magnitude) / 2,
- strokeColor: 'white',
- strokeWeight: .5
- };
- }
- function eqfeed_callback(results) {
- map.data.addGeoJson(results);
- }
- /*
- var center = new google.maps.LatLng(37.6554, 71.9091);
- map = new google.maps.Map(document.getElementById('map'), {
- center: center,
- zoom: 13
- });
- request = {
- location: center,
- radius: 8047
- // types: ['food'] // Change this
- };
- service = new google.maps.places.PlacesService(map);
- service.nearbySearch(request, callback);
- google.maps.event.addListener(map, 'rightclick', function (event) {
- map.setCenter(event.latLng);
- clearResults(markers);
- var request = {
- location: event.latLng,
- radius: 8047
- //types: ['food']
- };
- service.nearbySearch(request, callback);
- })
- }
- function callback(results, status) {
- if (status == google.maps.places.PlacesServiceStatus.OK) {
- for (var i = 0 ; i < results.length ; i++) {
- markers.push(createMarker(results[i]));
- }
- function clearResults(markers) {
- for (var m in markers) {
- markers[m].setMap(null)
- }
- markers = [];
- }
- */
+
+// ---------- Reset ---------------
+function reset(){
+    current_array = [];
+}
