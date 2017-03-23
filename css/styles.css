@@ -2,6 +2,7 @@ html, body,{
 	height: 100vh;
 	margin: 0;
 	padding: 0;
+	overflow: hidden;
 }
 #map {
 	height: 100%;
@@ -25,6 +26,15 @@ body{
 .glyphicon {
 	font-size: 2vmin;
 }
+
+#dropdownList {
+	width: 100%
+}
+
+.dropdown-menu {
+	background-color: black;
+	opacity: 0.8;
+}
 .marker {
 	top: 7px;
 }
@@ -44,15 +54,18 @@ body{
 .rightPanel {
 	right: 0;
 	position: absolute;
+	top: 21%;
 	width: 35vh;
 	background-color: #dddddd;
 	height: 60vh;
 	transform: translateX(500px);
 	transition: all .3s;
 	z-index: 2;
+	opacity: .9;
 	overflow: hidden;
 	overflow-y: auto;
 }
+
 .rightPanel.on {
 	transform: translateX(0);
 }
