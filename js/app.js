@@ -129,7 +129,6 @@ function mapInit() {
 var geocoder;
 
 
-
 function getCoordinates() {
 
     var coordinates = $('#address').val();
@@ -144,8 +143,8 @@ function getCoordinates() {
 
 //radio checked
 function radioInput() {
-    $('input').on('click', function(){
-
+    $('input').on('click', function(){})
+}
 
 function earthquake() {
     var lat_val = 0;
@@ -158,21 +157,7 @@ function earthquake() {
         location = eqArrayMonthM4p5[i].location;
         combineLatLongForGoogle(lat_val, lng_val, location);
     }
-
-
-    });
 }
-//
-function earthquake() {
-    // var lat_val = 0;
-    // var lng_val = 0;
-    // for (var i = 0 ; i < eqArray30DaysM4p5.length; i++) {
-    //     // lat_val = eqArray30DaysM4p5[i].lat;
-    //     // lng_val = eqArray30DaysM4p5[i].long;
-    //     combineLatLongForGoogle(lat_val, lng_val);
-    // }
-}
-
 
 function combineLatLongForGoogle(lat_val, lng_val, location) {
     var temp = {
@@ -194,28 +179,16 @@ function generateCircle(temp, location) {
         infowindow.setContent("Hi"); // Need to change this to show data.
         infowindow.open(map, this);
     });
+    createClickHandler(marker, location);
     return marker;
 }
 
-// ----------------------- Geocoding for address lookup ----------------------------
 
+//function locationLookup() {
+//   address = new LocationConstruct();
+//    createClickHandler(marker, location);
 
-
-
-
-
-
-
-// ------------------- Emd coding for address lookup ------------------------
-
-
-/*
-function locationLookup() {
-   address = new LocationConstruct();
-=======
-    createClickHandler(marker, location);
-
-}
+//}
 
 //Josh twitter start
 function createClickHandler(marker, location){
@@ -256,12 +229,6 @@ function getTweets(returnResponse){
 
 //Josh twitter end
 
-// function search() {
-//     var searchInput = $('#search');
-//     var autocomplete = new google.maps.places.Autocomplete(searchInput);
-// }
-
-
 // open panel functions
 $(document).ready(glyphClick);
 
@@ -275,24 +242,7 @@ function glyphClick() {
     });
 }
 
-function LocationConstruct() {
-    var self = this;
-    this.address= function(){
-        $.ajax({
-            url: 'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyCk5upYmaha3CZhHdeWaPU5F7e23Il_lIo',
-            method: 'get',
-            success: function(returnResponse){
-                console.log(returnResponse);
-                self.sortUSGSWeek(returnResponse);
-            },
-            error: function(returnResponse){
-                self.displayServerModal('Delete Error: ' + returnResponse.responseText, "Status Code: " + returnResponse.status);
-                console.log('error ', returnResponse);
-            }
-        });
-    };
-}
-*/
+
 
 
 
@@ -377,11 +327,5 @@ function LocationConstruct() {
 
  */
 
-//---------------- Google Maps Ends ----------------
-
-//---------------- USGS Data Starts ----------------
-
-
-console.log(eqArrayMonthM4p5);
 
 
