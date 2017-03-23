@@ -253,7 +253,7 @@ function getTweets(returnResponse) {
         $($imgContainer).append($imgDiv);
         $($twitterFeed).append($screenName, $hello);
         $($row).append($imgContainer, $twitterFeed);
-        $('.panel-body').append($row);
+        $('#twitter').append($row);
     }
 }
 //------------------------- Twitter Ends ---------------------------------
@@ -264,7 +264,7 @@ function glyphClick() {
     $('.glyphicon-bell').on('click', function () {
         $('.rightPanel').toggleClass('on');
     });
-    $('.glyphicon-list').on('click', function () {
+    $('.glyphicon-info-sign').on('click', function () {
         $('.testPanel').toggleClass('on');
     });
 }
