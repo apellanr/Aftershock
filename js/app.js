@@ -37,7 +37,7 @@ function ConstructorUSGS(){
             success: function(returnResponse){
                 console.log(returnResponse);
                 self.sortUSGSMonth(returnResponse);
-                earthquake();    // -------------------- Might have to change this later, right it is set to load when the page is loaded.
+                //earthquake();    // -------------------- Might have to change this later, right it is set to load when the page is loaded.
             },
             error: function(returnResponse){
                 self.displayServerModal('Delete Error: ' + returnResponse.responseText, "Status Code: " + returnResponse.status);
@@ -99,7 +99,7 @@ function ConstructorUSGS(){
 }
 
 // Jinwoo end
-
+var marker = [];
 var map;
 var infowindow;
 var request;
@@ -117,12 +117,12 @@ function mapInit() {
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 7,
         center: {lat: 36.778259, lng: -119.417931},
-        mapTypeId: 'terrain'
+        mapTypeId: 'roadmap'
     });
 }
 
 function earthquake() {
-    console.log("1");
+    // console.log("1");
     var lat_val = 0;
     var lng_val = 0;
     for (var i = 0 ; i < eqArrayMonthM4p5.length ; i++) {   // Will have to change the array to a variable.
@@ -142,11 +142,12 @@ function combineLatLongForGoogle(lat_val, lng_val) {
 }
 
 function generateCircle(temp) {
-    var marker = new google.maps.Marker({
+    marker = new google.maps.Marker({
         position: temp,
         map: map
     });
 }
+
 
 
 
