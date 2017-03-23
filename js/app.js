@@ -98,7 +98,7 @@ var map;
 var infowindow;
 var request;
 var service;
-var circle = [];
+var circleArray = [];
 
 $(document).ready(initialize);
 function initialize() {
@@ -121,6 +121,7 @@ function clickHandler() {
 function eqHistoryByDays() {
     console.log("Working!");
     days_clicked = $(this).val();
+    clearCircles();
     if (days_clicked == 1) {
         current_array = eqArrayDayM4p5;
     }
@@ -140,6 +141,7 @@ function mapInit() {
     $('.glyphicon-search').click(getAddress);
 }
 function getAddress() {
+    clearCircles();
     var geocoder = new google.maps.Geocoder();
     var address = $('#address').val();
     geocoder.geocode( { 'address': address}, function(results, status) {
@@ -165,7 +167,7 @@ function earthquake(current_array) {
             return function(){ 
                 combineLatLongForGoogle(eqData);
             }
-        })(eqData), 25000 * (current_array.length - i) / current_array.length)
+        })(eqData), 15000 * (current_array.length - i) / current_array.length)
 //        combineLatLongForGoogle(eqData);
     }
 }
@@ -202,12 +204,13 @@ function generateCircle(temp, eqData) {
             infowindow.open(map, this);
         });
     createClickHandler(circle, eqData);
+    circleArray.push(circle);
 }
 
 function clearCircles() {
-    circle = new google.maps.Circle({
-        radius: 0
-    });
+    for (var i = 0; i < circleArray.length; i++){
+        circleArray[i].setMap(null);
+    }
 }
 //------------------------- Twitter Starts ---------------------------------
 function createClickHandler(circle, eqData){
