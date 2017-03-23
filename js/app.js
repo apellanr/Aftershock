@@ -127,6 +127,7 @@ function radioInput() {
     $('input').on('click', function () {
     })
 }
+
 function earthquake() {
     var lat_val = 0;
     var lng_val = 0;
@@ -192,10 +193,15 @@ function calltwitter(searchWord) {
 function getTweets(returnResponse) {
     for (var i = 0; i < returnResponse.tweets.statuses.length; i++) {
         console.log(returnResponse.tweets.statuses[i].text);
+        var hello = returnResponse.tweets.statuses[i].text;
+        $('#twitterFeed').append("<p>" + hello + "</p>").css("");
+
         //ryan this is where you append to the dom or you can make a function
     }
 }
-//Josh twitter end
+
+function
+
 // open panel functions
 $(document).ready(glyphClick);
 function glyphClick() {
@@ -206,6 +212,7 @@ function glyphClick() {
         $('.rightPanel').toggleClass('on');
     });
 }
+
 // Create a <script> tag and set the USGS URL as the source.
 //  var script = document.createElement('script');
 // This example uses a local copy of the GeoJSON stored at

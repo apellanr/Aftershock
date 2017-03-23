@@ -1,5 +1,5 @@
 html, body,{
-	height: 100%;
+	height: 100vh;
 	margin: 0;
 	padding: 0;
 }
@@ -42,15 +42,17 @@ body{
 	transform: translateX(0);
 }
 .rightPanel {
-	top: 54px;
+	top: 25vh;
 	right: 0;
 	position: absolute;
-	width: 500px;
+	width: 35vh;
 	background-color: #dddddd;
-	height: 100vh;
+	height: 60vh;
 	transform: translateX(500px);
 	transition: all .3s;
 	z-index: 2;
+	overflow: hidden;
+	overflow-y: auto;
 }
 .rightPanel.on {
 	transform: translateX(0);
