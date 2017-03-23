@@ -260,7 +260,7 @@ function getTweets(returnResponse) {
 //------------------------- Twitter Ends ---------------------------------
 
 function panelTransitions() {
-    $('.glyphicon-bell').on('click', function () {
+    $('.fa-twitter').on('click', function () {
         $('.rightPanel').toggleClass('on');
     });
     $('.glyphicon-list').on('click', function () {
