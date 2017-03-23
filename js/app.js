@@ -131,41 +131,59 @@ function earthquake() {
     var lng_val = 0;
     var location = null;
     var magnitude = null;
+    var eqData = {}
     for (var i = 0 ; i < eqArrayMonthM4p5.length ; i++) {
-        lat_val = eqArrayMonthM4p5[i].lat;
-        lng_val = eqArrayMonthM4p5[i].long;
-        location = eqArrayMonthM4p5[i].location;
-        magnitude = eqArrayMonthM4p5[i].mag;
-        combineLatLongForGoogle(lat_val, lng_val, location, magnitude);
+        eqData = {
+            lat_val: eqArrayMonthM4p5[i].lat,
+            lng_val: eqArrayMonthM4p5[i].long,
+            location: eqArrayMonthM4p5[i].location,
+            magnitude: eqArrayMonthM4p5[i].mag.toString(),
+            time: eqArrayMonthM4p5[i].time
+        }
+//        console.log(eqData);
+        combineLatLongForGoogle(eqData);
     }
 }
-function combineLatLongForGoogle(lat_val, lng_val, location, magnitude) {
+function combineLatLongForGoogle(eqData) {
     var temp = {
-        lat: lat_val,
-        lng: lng_val
+        lat: eqData.lat_val,
+        lng: eqData.lng_val
     };
-    generateCircle(temp, location, magnitude);
+    generateCircle(temp, eqData);
     // console.log(temp);
 }
-function generateCircle(temp, location, magnitude) {
+function generateCircle(temp, eqData) {
     var marker = new google.maps.Circle({
         strokeColor: '#FF0000',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
+        strokeOpacity: 0.35,
+        strokeWeight: 1,
         fillColor: '#FF0000',
-        fillOpacity: 0.35,
+        fillOpacity: 0.45,
         center: temp,
         map: map,
-        radius: (magnitude * 25000)
-    });
+        radius: (eqData.magnitude * 25000),
+        data: {
+            magnitude: eqData.magnitude,
+            location: eqData.location,
+            time: eqData.time
+        }
+    })
     infowindow = new google.maps.InfoWindow();
-    google.maps.event.addListener(marker, 'click', function () {        // HELP!
-        console.log(this);
-        infowindow.setPosition(this.getCenter());
-        infowindow.setContent('hello'); // Need to change this to show data.
-        infowindow.open(map, this);
-    });
-    createClickHandler(marker, location);
+        google.maps.event.addListener(marker, 'click', function () {        
+            console.log(this);
+            infowindow.setPosition(this.getCenter());
+            var eqDataString = 'The Location is: ' + this.data.location + "<br/> Magnitude of: " + this.data.magnitude + "<br/> On this Date: " + this.data.time;
+            infowindow.setContent(eqDataString); // Need to change this to show data.
+            infowindow.open(map, this);
+        });
+
+    // google.maps.event.addListener(marker, 'click', function (magnitude) {        // HELP!
+    //     console.log(this);
+    //     infowindow.setPosition(this.getCenter());
+    //     infowindow.setContent('hello'); // Need to change this to show data.
+    //     infowindow.open(map, this);
+    // });
+    createClickHandler(marker, eqData);
     // return marker;
 }
 //function locationLookup() {
@@ -173,11 +191,11 @@ function generateCircle(temp, location, magnitude) {
 //    createClickHandler(marker, location);
 //}
 //Josh twitter start
-function createClickHandler(marker, location){
-    marker.addListener('click', clickRemoveExtraText.bind(this, location));
+function createClickHandler(marker, eqData){
+    marker.addListener('click', clickRemoveExtraText.bind(this, eqData));
 }
-function clickRemoveExtraText(location) {
-    var tempLocation = location;
+function clickRemoveExtraText(eqData) {
+    var tempLocation = eqData.location;
     var stringArray = tempLocation.split(' ');
     var indexWordOf = stringArray.indexOf("of");
     var withOutOf = stringArray.slice(indexWordOf + 1);
