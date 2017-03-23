@@ -122,9 +122,9 @@ function mapInit() {
 function earthquake() {
     var lat_val = 0;
     var lng_val = 0;
-    for (var i = 0 ; i < eqArray30DaysM4p5.length ; i++) {
-        lat_val = eqArray30DaysM4p5[i].lat;
-        lng_val = eqArray30DaysM4p5[i].long;
+    for (var i = 0 ; i < eqArrayMonthM4p5.length ; i++) {
+        lat_val = eqArrayMonthM4p5[i].lat;
+        lng_val = eqArrayMonthM4p5[i].long;
         combineLatLongForGoogle(lat_val, lng_val);
     }
 
@@ -249,5 +249,5 @@ function generateCircle(temp) {
 
 //---------------- USGS Data Starts ----------------
 
-console.log(eqArray30DaysM4p5);
+console.log(eqArrayMonthM4p5);
 
