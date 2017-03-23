@@ -145,6 +145,7 @@ function earthquake() {
     }
 }
 function combineLatLongForGoogle(eqData) {
+
     var temp = {
         lat: eqData.lat_val,
         lng: eqData.lng_val
@@ -177,20 +178,8 @@ function generateCircle(temp, eqData) {
             infowindow.open(map, this);
         });
 
-    // google.maps.event.addListener(marker, 'click', function (magnitude) {        // HELP!
-    //     console.log(this);
-    //     infowindow.setPosition(this.getCenter());
-    //     infowindow.setContent('hello'); // Need to change this to show data.
-    //     infowindow.open(map, this);
-    // });
     createClickHandler(marker, eqData);
-    // return marker;
 }
-//function locationLookup() {
-//   address = new LocationConstruct();
-//    createClickHandler(marker, location);
-//}
-//Josh twitter start
 function createClickHandler(marker, eqData){
     marker.addListener('click', clickRemoveExtraText.bind(this, eqData));
 }
@@ -201,6 +190,7 @@ function clickRemoveExtraText(eqData) {
     var withOutOf = stringArray.slice(indexWordOf + 1);
     var searchTerm = withOutOf.join(' ');
     calltwitter(searchTerm);  
+
 }
 function calltwitter(searchWord){
     console.log(searchWord);
@@ -228,6 +218,7 @@ function getTweets(returnResponse){
     }
 }
 //Josh twitter end
+
 // open panel functions
 $(document).ready(glyphClick);
 function glyphClick() {
@@ -238,6 +229,7 @@ function glyphClick() {
         $('.rightPanel').toggleClass('on');
     });
 }
+
 // Create a <script> tag and set the USGS URL as the source.
 //  var script = document.createElement('script');
 // This example uses a local copy of the GeoJSON stored at
@@ -301,3 +293,4 @@ function glyphClick() {
  markers = [];
  }
  */
+
