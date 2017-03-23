@@ -8,6 +8,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="js/app.js" type="text/javascript"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCk5upYmaha3CZhHdeWaPU5F7e23Il_lIo&libraries=places"></script>
+
+    <!--
+    <script type="text/javascript" src=https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyCk5upYmaha3CZhHdeWaPU5F7e23Il_lIo></script> -->
+
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 </head>
 <body>
@@ -38,7 +42,7 @@
             <li>
                 <form class="navbar-form navbar-right" role="search">
                     <div class="input-group form-group">
-                        <input type="text" class="form-control" placeholder="Enter Location" name="search">
+                        <input type="text" class="form-control" placeholder="Enter Location" name="search" id = "address">
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-map-marker"></span>
                         </span>
