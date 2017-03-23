@@ -37,6 +37,7 @@ function ConstructorUSGS(){
             success: function(returnResponse){
                 // console.log(returnResponse);
                 self.sortUSGSMonth(returnResponse);
+                earthquake();    // -------------------- Might have to change this later, right it is set to load when the page is loaded.
             },
             error: function(returnResponse){
                 self.displayServerModal('Delete Error: ' + returnResponse.responseText, "Status Code: " + returnResponse.status);
@@ -94,8 +95,9 @@ function ConstructorUSGS(){
             var depth = returnResponse.features[i].geometry.coordinates[2];
             eqArrayDayM4p5.push({location, mag, time, lat, long, depth});
         }
-    }
+    };
 }
+
 // Jinwoo end
 
 var map;
@@ -108,20 +110,27 @@ $(document).ready(initialize);
 
 function initialize() {
     mapInit();
-    earthquake();
+    console.log("2");
 }
 
 function mapInit() {
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 7,
         center: {lat: 36.778259, lng: -119.417931},
-        mapTypeId: 'terrain'
+        mapTypeId: 'roadmap'
     });
 }
 
+
+//radio checked
+function radioInput() {
+    $('input').on('click', function(){
+
 function earthquake() {
+    console.log("1");
     var lat_val = 0;
     var lng_val = 0;
+
     var location = null;
     for (var i = 0 ; i < eqArrayMonthM4p5.length ; i++) {
         lat_val = eqArrayMonthM4p5[i].lat;
@@ -130,8 +139,19 @@ function earthquake() {
         combineLatLongForGoogle(lat_val, lng_val, location);
     }
 
-}
 
+    });
+}
+//
+function earthquake() {
+    // var lat_val = 0;
+    // var lng_val = 0;
+    // for (var i = 0 ; i < eqArray30DaysM4p5.length; i++) {
+    //     // lat_val = eqArray30DaysM4p5[i].lat;
+    //     // lng_val = eqArray30DaysM4p5[i].long;
+    //     combineLatLongForGoogle(lat_val, lng_val);
+    // }
+}
 
 function combineLatLongForGoogle(lat_val, lng_val, location) {
     var temp = {
@@ -190,6 +210,25 @@ function getTweets(returnResponse){
 
 
 //Josh twitter end
+
+// function search() {
+//     var searchInput = $('#search');
+//     var autocomplete = new google.maps.places.Autocomplete(searchInput);
+// }
+
+
+// open panel functions
+$(document).ready(glyphClick);
+
+function glyphClick() {
+    $('.glyphicon-bell').on('click', function(){
+        $('.testPanel').toggleClass('on');
+    });
+
+    $('.glyphicon-list').on('click', function(){
+        $('.rightPanel').toggleClass('on');
+    });
+}
 
 
 
@@ -292,5 +331,7 @@ function getTweets(returnResponse){
 
 //---------------- USGS Data Starts ----------------
 
-// console.log(eqArray30DaysM4p5);
+
+console.log(eqArrayMonthM4p5);
+
 

@@ -1,11 +1,27 @@
-html, body, #map {
+html, body,{
 	height: 100%;
 	margin: 0;
+	padding: 0;
+}
+
+#map {
+	height: 100%;
+	position: static !important;
 }
 
 @font-face {
 	font-family: earthquakefont;
 	src: url(earthquake.ttf);
+}
+
+.navbar-inverse {
+	z-index: 1;
+	margin-bottom: 0;
+}
+
+.navbar-brand {
+	font-size: 3.5vmin;
+	font-family: earthquakefont;
 }
 
 body{
@@ -16,11 +32,38 @@ body{
 	font-size: 2vmin;
 }
 
-/*.glyphicon-map-marker {*/
-	/*font-size: 2.4vmin;*/
-/*}*/
+.marker {
+	top: 7px;
+}
 
-.navbar-brand {
-	font-size: 3.5vmin;
-	font-family: earthquakefont;
+/*panel toggle*/
+
+.testPanel {
+	position: absolute;
+	width: 500px;
+	background-color: #dddddd;
+	height: 100vh;
+	transform: translateX(-500px);
+	transition: all .2s;
+	z-index: 1;
+}
+
+.testPanel.on {
+	transform: translateX(0);
+}
+
+.rightPanel {
+	top: 54px;
+	right: 0;
+	position: absolute;
+	width: 500px;
+	background-color: #dddddd;
+	height: 100vh;
+	transform: translateX(500px);
+	transition: all .3s;
+	z-index: 2;
+}
+
+.rightPanel.on {
+	transform: translateX(0);
 }
