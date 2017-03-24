@@ -110,7 +110,8 @@ function initialize() {
 }
 
 function clickHandler() {
-    $('.btn').click(eqHistoryByDays);
+    $('.daySelector').click(eqHistoryByDays);
+    $('.glyphicon-refresh').click(clearCircles)
     $('#address').keypress(function(event){
         if(event.keyCode == 13){
         getAddress();    
@@ -121,9 +122,9 @@ function clickHandler() {
     $(".glyphicon-search").click(getAddress);
 }
 function eqHistoryByDays() {
-    console.log("Working!");
-    days_clicked = $(this).val();
     clearCircles();
+    var days_clicked = 0;
+    days_clicked = $(this).val();
     if (days_clicked == 1) {
         current_array = eqArrayDayM4p5;
     }
@@ -133,7 +134,7 @@ function eqHistoryByDays() {
     else {
         current_array = eqArrayMonthM4p5;
     }
-    earthquake(current_array);
+    earthquake(current_array, days_clicked);
 }
 function mapInit() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -149,13 +150,13 @@ function getAddress() {
     geocoder.geocode( { 'address': address}, function(results, status) {
         if (status == 'OK') {
             map.setCenter(results[0].geometry.location);
-            earthquake(current_array);
+            earthquake(current_array, 30);
         } else {
             alert('Geocode was not successful for the following reason: ' + status);
         }
     });
 }
-function earthquake(current_array) {
+function earthquake(current_array, days_clicked) {
     var eqData = {};
     for (var i = 0 ; i < current_array.length ; i++) {
         eqData = {
@@ -169,7 +170,7 @@ function earthquake(current_array) {
             return function(){ 
                 combineLatLongForGoogle(eqData);
             }
-        })(eqData), 15000 * (current_array.length - i) / current_array.length);
+        })(eqData), (400 * days_clicked) * (current_array.length - i) / current_array.length)
 //        combineLatLongForGoogle(eqData);
     }
 }
