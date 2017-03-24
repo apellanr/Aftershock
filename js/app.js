@@ -248,8 +248,8 @@ function getTweets(returnResponse) {
         var $screenName = returnResponse.tweets.statuses[i].user.screen_name;
         var $hello = returnResponse.tweets.statuses[i].text;
         var $row = $('<div>').addClass('row');
-        var $imgContainer = $('<div>').addClass('col-xs-2 imgLogo');
-        var $imgDiv = $('<div>').addClass('imgtweet');
+        var $imgContainer = $('<div>').addClass('imgLogo');
+        var $imgDiv = $('<div>').addClass('col-xs-2 hidden-sm imgtweet');
         var $imgLogo = $('<img>').addClass('imgSource').attr('src', 'css/twitterlogo.png');
         var $twitterFeed = $('<div>').addClass('col-xs-10 twitterFeed');
         $($imgDiv).append($imgLogo);
