@@ -98,23 +98,32 @@ var map;
 var infowindow;
 var request;
 var service;
-var circle = [];
+var circleArray = [];
 
 $(document).ready(initialize);
 function initialize() {
     mapInit();
     clickHandler();
     panelTransitions();
+    getAddress();
+    $(document).off('ready', initialize);
 }
 
 function clickHandler() {
     $('.btn').click(eqHistoryByDays);
-    $('.glyphicon-search').click(searchSubmitClicked);
+    $('#address').keypress(function(event){
+        if(event.keyCode == 13){
+        getAddress();    
+        event.preventDefault();
+        event.stopPropagation();
+        }
+    });
+    $(".glyphicon-search").click(getAddress);
 }
-
 function eqHistoryByDays() {
     console.log("Working!");
     days_clicked = $(this).val();
+    clearCircles();
     if (days_clicked == 1) {
         current_array = eqArrayDayM4p5;
     }
@@ -125,35 +134,27 @@ function eqHistoryByDays() {
         current_array = eqArrayMonthM4p5;
     }
     earthquake(current_array);
-
 }
-
-function searchSubmitClicked() {
-    console.log("Search Clicked Working!");
-    //mapInit();
-}
-
-    // var geocoder;
 function mapInit() {
-
-    // Geocoding Start
-    // var coordinates = $('#address').val();
-    // geocoder = new google.maps.Geocoder();
-    // geocoder.geocode({'address': coordinates}, function (results, status) {
-    //     if (status == 'OK'){
-    //         coordinates = results[0].geometry.location;
-    //         // var marker = new google.maps.Marker
-    //     }
-    // });
-    // Geocoding End
-
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 4,
-        center: {lat: 36.778259, lng: -119.417931},
+        zoom: 2,
         mapTypeId: 'roadmap'
     });
+    $('.glyphicon-search').click(getAddress);
 }
-
+function getAddress() {
+    clearCircles();
+    var geocoder = new google.maps.Geocoder();
+    var address = $('#address').val();
+    geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == 'OK') {
+            map.setCenter(results[0].geometry.location);
+            earthquake(current_array);
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+        }
+    });
+}
 function earthquake(current_array) {
     var eqData = {};
     for (var i = 0 ; i < current_array.length ; i++) {
@@ -164,7 +165,12 @@ function earthquake(current_array) {
             magnitude: current_array[i].mag.toString(),
             time: current_array[i].time
         };
-        combineLatLongForGoogle(eqData);
+        setTimeout((function(eqData){
+            return function(){ 
+                combineLatLongForGoogle(eqData);
+            }
+        })(eqData), 15000 * (current_array.length - i) / current_array.length)
+//        combineLatLongForGoogle(eqData);
     }
 }
 function combineLatLongForGoogle(eqData) {
@@ -191,26 +197,23 @@ function generateCircle(temp, eqData) {
             location: eqData.location,
             time: eqData.time
         }
-
     });
     infowindow = new google.maps.InfoWindow();
         google.maps.event.addListener(circle, 'click', function () {
-            console.log(this);
             infowindow.setPosition(this.getCenter());
             var eqDataString = 'The Location is: ' + this.data.location + "<br/> Magnitude of: " + this.data.magnitude + "<br/> On this Date: " + this.data.time;
             infowindow.setContent(eqDataString);
             infowindow.open(map, this);
         });
     createClickHandler(circle, eqData);
+    circleArray.push(circle);
 }
 
 function clearCircles() {
-    circle = new google.maps.Circle({
-        radius: 0
-
-    });
+    for (var i = 0; i < circleArray.length; i++){
+        circleArray[i].setMap(null);
+    }
 }
-
 //------------------------- Twitter Starts ---------------------------------
 function createClickHandler(circle, eqData){
     circle.addListener('click', clickRemoveExtraText.bind(this, eqData));
@@ -224,7 +227,6 @@ function clickRemoveExtraText(eqData) {
     calltwitter(searchTerm);
 }
 function calltwitter(searchWord){
-    console.log(searchWord);
     $.ajax({
         data: {
             search_term: 'earthquake ' + searchWord
@@ -233,7 +235,6 @@ function calltwitter(searchWord){
         url: 'http://s-apis.learningfuze.com/hackathon/twitter/index.php?',
         method: 'post',
         success: function (returnResponse) {
-            console.log('works kinda: ', returnResponse);
             getTweets(returnResponse);
         },
         error: function(returnResponse){
@@ -254,7 +255,7 @@ function getTweets(returnResponse) {
         $($imgContainer).append($imgDiv);
         $($twitterFeed).append($screenName, $hello);
         $($row).append($imgContainer, $twitterFeed);
-        $('.panel-body').append($row);
+        $('#twitter').append($row);
     }
 }
 //------------------------- Twitter Ends ---------------------------------
@@ -263,7 +264,7 @@ function panelTransitions() {
     $('.fa-twitter').on('click', function () {
         $('.rightPanel').toggleClass('on');
     });
-    $('.glyphicon-list').on('click', function () {
+    $('.glyphicon-info-sign').on('click', function () {
         $('.testPanel').toggleClass('on');
     });
 }
