@@ -46,9 +46,9 @@ body{
 /*panel toggle*/
 .testPanel {
 	position: absolute;
-	width: 30vh;
+	width: 40vh;
 	background-color: #dddddd;
-	height: 50vh;
+	height: 65%;
 	transform: translateX(0px);
 	transition: all .2s;
 	z-index: 1;
@@ -95,9 +95,22 @@ body{
 .row {
 	margin-left: -15px;
 	margin-bottom: 2vmin;
+	height: 10%;
 }
 
 #left-side-menu {
 	width: 100%;
 	text-align: left;
+}
+
+.panel-body {
+	font-size: 10px;
+}
+
+.panel-footer {
+	font-size: 12px;
+}
+
+.list-group-item{
+	font-size: 12px;
 }

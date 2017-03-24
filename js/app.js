@@ -169,7 +169,7 @@ function earthquake(current_array) {
             return function(){ 
                 combineLatLongForGoogle(eqData);
             }
-        })(eqData), 15000 * (current_array.length - i) / current_array.length)
+        })(eqData), 15000 * (current_array.length - i) / current_array.length);
 //        combineLatLongForGoogle(eqData);
     }
 }
