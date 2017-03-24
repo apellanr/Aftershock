@@ -104,9 +104,11 @@ $(document).ready(initialize);
 function initialize() {
     mapInit();
     clickHandler();
+    panelTransitions();
     getAddress();
     $(document).off('ready', initialize);
 }
+
 function clickHandler() {
     $('.btn').click(eqHistoryByDays);
     $('#address').keypress(function(event){
@@ -258,10 +260,8 @@ function getTweets(returnResponse) {
 }
 //------------------------- Twitter Ends ---------------------------------
 
-// open panel functions
-$(document).ready(glyphClick);
-function glyphClick() {
-    $('.glyphicon-bell').on('click', function () {
+function panelTransitions() {
+    $('.fa-twitter').on('click', function () {
         $('.rightPanel').toggleClass('on');
     });
     $('.glyphicon-info-sign').on('click', function () {
