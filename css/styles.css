@@ -103,11 +103,12 @@ body{
 
 #left-side-menu {
 	width: 100%;
-	text-align: left;
+	text-align: center;
+	font-size: 25px;
 }
 
 .panel-body {
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .panel-footer {
