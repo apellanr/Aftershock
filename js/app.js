@@ -139,7 +139,6 @@ function getAddress() {
     geocoder.geocode( { 'address': address}, function(results, status) {
         if (status == 'OK') {
             map.setCenter(results[0].geometry.location);
-            earthquake(current_array, 30);
         } else {
             alert('Geocode was not successful for the following reason: ' + status);
         }
@@ -171,15 +170,28 @@ function combineLatLongForGoogle(eqData) {
     generateCircle(temp, eqData);
 }
 function generateCircle(temp, eqData) {
+    var eqDataMagStringToNumber = parseInt(eqData.magnitude);
+    var tempColor = null;
+    var tempOpacity = null;
+    if (eqData.magnitude >= 6){
+        tempColor = '#FF0000';
+        tempOpacity = 1;
+    } else if (eqData.magnitude < 6 && eqData.magnitude >= 5){
+        tempColor = '#ff6201';
+        tempOpacity = .5;
+    } else{
+        tempColor = '#fffa01';
+        tempOpacity = .2;
+    }
     circle = new google.maps.Circle({
-        strokeColor: '#FF0000',
-        strokeOpacity: 0.35,
-        strokeWeight: 1,
-        fillColor: '#FF0000',
-        fillOpacity: 0.45,
+        strokeColor: tempColor,
+        strokeOpacity: 0.5,
+        strokeWeight: .5,
+        fillColor: tempColor,
+        fillOpacity: tempOpacity,
         center: temp,
         map: map,
-        radius: (eqData.magnitude * 25000),
+        radius: ((eqData.magnitude * eqData.magnitude) * 15000),
         data: {
             magnitude: eqData.magnitude,
             location: eqData.location,
