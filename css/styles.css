@@ -96,12 +96,18 @@ body{
 
 .twitterFeed {
 	padding-left: 8%;
+	font-size: 15px;
 }
 
 .imgtweet {
 	width: 50px;
 	height: 50px;
 	line-height: 1em;
+}
+
+#tweetInfo {
+	text-align: center;
+	font-size: 1.2em;
 }
 
 .row {
