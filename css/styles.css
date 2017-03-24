@@ -32,7 +32,6 @@ body{
 .glyphicon {
 	font-size: 2vmin;
 }
-
 /*joshs only line of CSS*/
 .daySelector {
 	font-size: 100%;
@@ -45,7 +44,6 @@ body{
 #dropdownList {
 	width: 100%
 }
-
 .dropdown-menu {
 	background-color: black;
 	opacity: 0.8;
@@ -53,7 +51,6 @@ body{
 .marker {
 	top: 7px;
 }
-/*panel toggle*/
 .testPanel {
 	position: absolute;
 	width: 40vh;
@@ -81,11 +78,9 @@ body{
 	overflow: hidden;
 	overflow-y: auto;
 }
-
 .rightPanel.on {
 	transform: translateX(0);
 }
-
 .panel-heading {
 	background-color: #0084b4;
 	color: white;
@@ -93,43 +88,35 @@ body{
 	font-size: 2.5vmin;
 	width: 100%;
 }
-
 .twitterFeed {
 	padding-left: 8%;
 	font-size: 15px;
 }
-
 .imgtweet {
 	width: 50px;
 	height: 50px;
 	line-height: 1em;
 }
-
 #tweetInfo {
 	text-align: center;
 	font-size: 1.2em;
 }
-
 .row {
 	margin-left: -15px;
 	margin-bottom: 2vmin;
 	height: 10%;
 }
-
 #left-side-menu {
 	width: 100%;
 	text-align: center;
 	font-size: 25px;
 }
-
 .panel-body {
 	font-size: 13px;
 }
-
 .panel-footer {
 	font-size: 12px;
 }
-
 .list-group-item{
 	font-size: 12px;
 }

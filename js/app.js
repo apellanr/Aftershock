@@ -1,13 +1,10 @@
 $().ready(startUSGS);
-
 var usgsData = null;
 var eqArrayWeekM4p5 = [];
 var eqArrayMonthM4p5 = [];
 var eqArrayDayM4p5 = [];
 var current_array = eqArrayMonthM4p5;
-
 function startUSGS(){
-
     usgsData = new ConstructorUSGS;
     usgsData.getUSGSWeek();
     usgsData.getUSGSMonth();
@@ -23,7 +20,6 @@ function ConstructorUSGS() {
                 self.sortUSGSWeek(returnResponse);
             },
             error: function (returnResponse) {
-                self.displayServerModal('Delete Error: ' + returnResponse.responseText, "Status Code: " + returnResponse.status);
                 console.log('error ', returnResponse);
             }
         });
@@ -34,10 +30,8 @@ function ConstructorUSGS() {
             method: 'get',
             success: function(returnResponse){
                 self.sortUSGSMonth(returnResponse);
-               // earthquake();    // -------------------- Might have to change this later, right it is set to load when the page is loaded.
             },
             error: function (returnResponse) {
-                self.displayServerModal('Delete Error: ' + returnResponse.responseText, "Status Code: " + returnResponse.status);
                 console.log('error ', returnResponse);
             }
         })
@@ -50,7 +44,6 @@ function ConstructorUSGS() {
                 self.sortUSGSDay(returnResponse);
             },
             error: function (returnResponse) {
-                self.displayServerModal('Delete Error: ' + returnResponse.responseText, "Status Code: " + returnResponse.status);
                 console.log('error ', returnResponse);
             }
         })
@@ -79,7 +72,6 @@ function ConstructorUSGS() {
             eqArrayMonthM4p5.push({location, mag, time, lat, long, depth});
         }
     };
-
     this.sortUSGSDay = function(returnResponse){
         for(var i = 0; i <   returnResponse.features.length; i++){
             var location = returnResponse.features[i].properties.place;
@@ -93,13 +85,11 @@ function ConstructorUSGS() {
         }
     };
 }
-
 var map;
 var infowindow;
 var request;
 var service;
 var circleArray = [];
-
 $(document).ready(initialize);
 function initialize() {
     mapInit();
@@ -108,7 +98,6 @@ function initialize() {
     getAddress();
     $(document).off('ready', initialize);
 }
-
 function clickHandler() {
     $('.daySelector').click(eqHistoryByDays);
     $('.glyphicon-refresh').click(clearCircles)
@@ -171,7 +160,6 @@ function earthquake(current_array, days_clicked) {
                 combineLatLongForGoogle(eqData);
             }
         })(eqData), (400 * days_clicked) * (current_array.length - i) / current_array.length)
-//        combineLatLongForGoogle(eqData);
     }
 }
 function combineLatLongForGoogle(eqData) {
@@ -182,7 +170,6 @@ function combineLatLongForGoogle(eqData) {
     };
     generateCircle(temp, eqData);
 }
-
 function generateCircle(temp, eqData) {
     circle = new google.maps.Circle({
         strokeColor: '#FF0000',
@@ -209,7 +196,6 @@ function generateCircle(temp, eqData) {
     createClickHandler(circle, eqData);
     circleArray.push(circle);
 }
-
 function clearCircles() {
     for (var i = 0; i < circleArray.length; i++){
         circleArray[i].setMap(null);
@@ -260,7 +246,6 @@ function getTweets(returnResponse) {
     }
 }
 //------------------------- Twitter Ends ---------------------------------
-
 function panelTransitions() {
     $('.fa-twitter').on('click', function () {
         $('.rightPanel').toggleClass('on');
@@ -269,8 +254,6 @@ function panelTransitions() {
         $('.testPanel').toggleClass('on');
     });
 }
-
-// ---------- Reset ---------------
 function reset(){
     current_array = [];
 }
