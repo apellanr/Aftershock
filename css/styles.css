@@ -17,7 +17,7 @@ html, body {
 	margin-bottom: 0;
 }
 .navbar-brand {
-	font-size: 28px;
+	font-size: 27px;
 	font-family: earthquakefont;
 }
 .navSlogen {
@@ -126,4 +126,15 @@ body{
 }
 .list-group-item{
 	font-size: 12px;
+}
+@media screen and (max-width: 400px) {
+	.navbar-brand{
+		font-size: 15px;
+	}
+	..navSlogen{
+		font-size: 8px;
+	}
+	.input-group{
+		width: 100%;
+	}
 }
