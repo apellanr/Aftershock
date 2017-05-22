@@ -17,24 +17,31 @@ html, body {
 	margin-bottom: 0;
 }
 .navbar-brand {
-	font-size: 3.5vmin;
+	font-size: 28px;
 	font-family: earthquakefont;
 }
-a > span >span {
-	font-size: 1.5vmin;
+.navSlogen {
+	font-size: 10px;
 	font-family: Open Sans, serif;
 	padding-left: 3%;
 }
 body{
 	background-color: lavender;
 }
-
+.input-group{
+	width: 92%;
+}
 .glyphicon {
 	font-size: 2vmin;
 }
-/*joshs only line of CSS*/
 .daySelector {
 	font-size: 100%;
+}
+.dropdown-menu>li>a {
+	color: #9d9d9d;
+}
+.dropdown-menu {
+	max-width: 70px;
 }
 
 .fa-twitter {
