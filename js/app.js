@@ -30,6 +30,9 @@ function ConstructorUSGS() {
             method: 'get',
             success: function(returnResponse){
                 self.sortUSGSMonth(returnResponse);
+                setTimeout(function(){
+                    $('.month').trigger('click');
+                }, 1000)
             },
             error: function (returnResponse) {
                 console.log('error ', returnResponse);
@@ -92,18 +95,18 @@ var service;
 var circleArray = [];
 $(document).ready(initialize);
 function initialize() {
-    mapInit();
     clickHandler();
+    mapInit();
     panelTransitions();
     getAddress();
     $(document).off('ready', initialize);
 }
 function clickHandler() {
     $('.daySelector').click(eqHistoryByDays);
-    $('.glyphicon-refresh').click(clearCircles)
+    $('.clearEQ').click(clearCircles)
     $('#address').keypress(function(event){
         if(event.keyCode == 13){
-        getAddress();    
+        getAddress();
         event.preventDefault();
         event.stopPropagation();
         }
@@ -113,7 +116,7 @@ function clickHandler() {
 function eqHistoryByDays() {
     clearCircles();
     var days_clicked = 0;
-    days_clicked = $(this).val();
+    days_clicked = $(this).attr('days');
     if (days_clicked == 1) {
         current_array = eqArrayDayM4p5;
     }
@@ -155,7 +158,7 @@ function earthquake(current_array, days_clicked) {
             time: current_array[i].time
         };
         setTimeout((function(eqData){
-            return function(){ 
+            return function(){
                 combineLatLongForGoogle(eqData);
             }
         })(eqData), (400 * days_clicked) * (current_array.length - i) / current_array.length)
@@ -173,15 +176,18 @@ function generateCircle(temp, eqData) {
     var eqDataMagStringToNumber = parseInt(eqData.magnitude);
     var tempColor = null;
     var tempOpacity = null;
-    if (eqData.magnitude >= 6){
+    if (eqData.magnitude >= 7){
+        tempColor = '#FFFFF';
+        tempOpacity = 1;
+    } else if(eqData.magnitude >= 6){
         tempColor = '#FF0000';
         tempOpacity = 1;
     } else if (eqData.magnitude < 6 && eqData.magnitude >= 5){
         tempColor = '#ff6201';
-        tempOpacity = .5;
+        tempOpacity = .65;
     } else{
         tempColor = '#fffa01';
-        tempOpacity = .2;
+        tempOpacity = .5;
     }
     circle = new google.maps.Circle({
         strokeColor: tempColor,
@@ -259,10 +265,10 @@ function getTweets(returnResponse) {
 }
 //------------------------- Twitter Ends ---------------------------------
 function panelTransitions() {
-    $('.fa-twitter').on('click', function () {
+    $('.twitterClick').on('click', function () {
         $('.rightPanel').toggleClass('on');
     });
-    $('.glyphicon-info-sign').on('click', function () {
+    $('.infoClick').on('click', function () {
         $('.testPanel').toggleClass('on');
     });
 }
