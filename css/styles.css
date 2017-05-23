@@ -17,7 +17,7 @@ html, body {
 	margin-bottom: 0;
 }
 .navbar-brand {
-	font-size: 28px;
+	font-size: 27px;
 	font-family: earthquakefont;
 }
 .navSlogen {
@@ -32,7 +32,7 @@ body{
 	width: 92%;
 }
 .glyphicon {
-	font-size: 2vmin;
+	font-size: 15px;
 }
 .daySelector {
 	font-size: 100%;
@@ -44,8 +44,8 @@ body{
 	max-width: 70px;
 }
 
-.fa-twitter {
-	font-size: 2.5vmin !important;
+#twitter {
+	font-size: 16px;
 }
 
 #dropdownList {
@@ -126,4 +126,23 @@ body{
 }
 .list-group-item{
 	font-size: 12px;
+}
+.navbar .navbar-collapse {
+  text-align: center;
+}
+@media screen and (max-width: 768px) {
+	.input-group{
+		width: 100%;
+	}
+}
+@media screen and (max-width: 400px) {
+	.navbar-brand{
+		font-size: 15px;
+	}
+	..navSlogen{
+		font-size: 8px;
+	}
+	.input-group{
+		width: 100%;
+	}
 }
