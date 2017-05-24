@@ -60,7 +60,7 @@ function ConstructorUSGS() {
             var long = returnResponse.features[i].geometry.coordinates[0];
             var lat = returnResponse.features[i].geometry.coordinates[1];
             var depth = returnResponse.features[i].geometry.coordinates[2];
-            eqArrayWeekM4p5.push({location, mag, time, lat, long, depth});
+            eqArrayWeekM4p5.push({location: location, mag: mag, time: time, lat: lat, long: long, depth: depth});
         }
     };
     this.sortUSGSMonth = function (returnResponse) {
@@ -72,7 +72,7 @@ function ConstructorUSGS() {
             var long = returnResponse.features[i].geometry.coordinates[0];
             var lat = returnResponse.features[i].geometry.coordinates[1];
             var depth = returnResponse.features[i].geometry.coordinates[2];
-            eqArrayMonthM4p5.push({location, mag, time, lat, long, depth});
+            eqArrayMonthM4p5.push({location: location, mag: mag, time: time, lat: lat, long: long, depth: depth});
         }
     };
     this.sortUSGSDay = function(returnResponse){
@@ -84,7 +84,7 @@ function ConstructorUSGS() {
             var lat = returnResponse.features[i].geometry.coordinates[1];
             var long = returnResponse.features[i].geometry.coordinates[0];
             var depth = returnResponse.features[i].geometry.coordinates[2];
-            eqArrayDayM4p5.push({location, mag, time, lat, long, depth});
+            eqArrayDayM4p5.push({location: location, mag: mag, time: time, lat: lat, long: long, depth: depth});
         }
     };
 }
@@ -99,6 +99,7 @@ function initialize() {
     mapInit();
     panelTransitions();
     getAddress();
+    handleClose();
     $(document).off('ready', initialize);
 }
 function clickHandler() {
@@ -114,6 +115,7 @@ function clickHandler() {
     $(".glyphicon-search").click(getAddress);
 }
 function eqHistoryByDays() {
+    $('.collapse').collapse("hide")	;
     clearCircles();
     var days_clicked = 0;
     days_clicked = $(this).attr('days');
@@ -237,7 +239,7 @@ function calltwitter(searchWord){
             search_term: 'earthquake ' + searchWord
         },
         dataType: 'json',
-        url: 'http://s-apis.learningfuze.com/hackathon/twitter/index.php?',
+        url: 'https://s-apis.learningfuze.com/hackathon/twitter/index.php?',
         method: 'post',
         success: function (returnResponse) {
             getTweets(returnResponse);
@@ -263,13 +265,24 @@ function getTweets(returnResponse) {
         $('#twitter').append($row);
     }
 }
+//-------------------------collapse---------------------------------------
+function handleClose(){
+    $('.closeInfo').on('click', function () {
+        $('.infoPanel').toggleClass('on');
+    });
+    $('.closeTwitter').on('click', function () {
+        $('.rightPanel').toggleClass('on');
+    });
+}
 //------------------------- Twitter Ends ---------------------------------
 function panelTransitions() {
     $('.twitterClick').on('click', function () {
         $('.rightPanel').toggleClass('on');
+        $('.collapse').collapse("hide")	;
     });
     $('.infoClick').on('click', function () {
-        $('.testPanel').toggleClass('on');
+        $('.infoPanel').toggleClass('on');
+        $('.collapse').collapse("hide")	;
     });
 }
 function reset(){

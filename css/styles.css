@@ -1,12 +1,13 @@
 html, body {
 	height: 100vh;
+	width: 100vw;
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
 }
 #map {
 	height: 100%;
-	position: static !important;
+	width: 100%;
 }
 @font-face {
 	font-family: earthquakefont;
@@ -25,8 +26,8 @@ html, body {
 	font-family: Open Sans, serif;
 	padding-left: 3%;
 }
-body{
-	background-color: lavender;
+.navbar {
+	width: 100%;
 }
 .input-group{
 	width: 92%;
@@ -44,10 +45,9 @@ body{
 	max-width: 70px;
 }
 
-#twitter {
+#twitterIcon {
 	font-size: 16px;
 }
-
 #dropdownList {
 	width: 100%
 }
@@ -58,27 +58,35 @@ body{
 .marker {
 	top: 7px;
 }
-.testPanel {
+.infoPanel {
+	-webkit-position: absolute;
+	-moz-position: absolute;
+	-ms-position: absolute;
+	-o-position: absolute;
 	position: absolute;
 	width: 40vh;
 	background-color: #dddddd;
-	transform: translateX(0px);
+	display: initial;
 	transition: all .2s;
 	z-index: 1;
 	top: 21%;
 	opacity: .9;
 }
-.testPanel.on {
-	transform: translateX(-50vh);
+.infoPanel.on {
+	display: none;
 }
 .rightPanel {
 	right: 0;
+	-webkit-position: absolute;
+	-moz-position: absolute;
+	-ms-position: absolute;
+	-o-position: absolute;
 	position: absolute;
 	top: 21%;
 	width: 35vh;
 	background-color: #dddddd;
 	height: 60vh;
-	transform: translateX(500px);
+	display: none;
 	transition: all .3s;
 	z-index: 2;
 	opacity: .9;
@@ -86,13 +94,13 @@ body{
 	overflow-y: auto;
 }
 .rightPanel.on {
-	transform: translateX(0);
+	display: initial;
 }
 .panel-heading {
 	background-color: #0084b4;
 	color: white;
 	text-align: center;
-	font-size: 2.5vmin;
+	font-size: 20px;
 	width: 100%;
 }
 .twitterFeed {
@@ -116,7 +124,7 @@ body{
 #left-side-menu {
 	width: 100%;
 	text-align: center;
-	font-size: 25px;
+	font-size: 20px;
 }
 .panel-body {
 	font-size: 13px;
@@ -133,6 +141,9 @@ body{
 @media screen and (max-width: 768px) {
 	.input-group{
 		width: 100%;
+	}
+	.navbar {
+		z-index: 10;
 	}
 }
 @media screen and (max-width: 400px) {
