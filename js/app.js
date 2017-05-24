@@ -237,7 +237,7 @@ function calltwitter(searchWord){
             search_term: 'earthquake ' + searchWord
         },
         dataType: 'json',
-        url: 'http://s-apis.learningfuze.com/hackathon/twitter/index.php?',
+        url: 'https://s-apis.learningfuze.com/hackathon/twitter/index.php?',
         method: 'post',
         success: function (returnResponse) {
             getTweets(returnResponse);
