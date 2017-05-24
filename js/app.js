@@ -60,7 +60,7 @@ function ConstructorUSGS() {
             var long = returnResponse.features[i].geometry.coordinates[0];
             var lat = returnResponse.features[i].geometry.coordinates[1];
             var depth = returnResponse.features[i].geometry.coordinates[2];
-            eqArrayWeekM4p5.push({location: location, mag: mag, time: time, lat: lat, long: long, depth: d});
+            eqArrayWeekM4p5.push({location: location, mag: mag, time: time, lat: lat, long: long, depth: depth});
         }
     };
     this.sortUSGSMonth = function (returnResponse) {
@@ -72,7 +72,7 @@ function ConstructorUSGS() {
             var long = returnResponse.features[i].geometry.coordinates[0];
             var lat = returnResponse.features[i].geometry.coordinates[1];
             var depth = returnResponse.features[i].geometry.coordinates[2];
-            eqArrayMonthM4p5.push({location: location, mag: mag, time: time, lat: lat, long: long, depth: d});
+            eqArrayMonthM4p5.push({location: location, mag: mag, time: time, lat: lat, long: long, depth: depth});
         }
     };
     this.sortUSGSDay = function(returnResponse){
@@ -84,7 +84,7 @@ function ConstructorUSGS() {
             var lat = returnResponse.features[i].geometry.coordinates[1];
             var long = returnResponse.features[i].geometry.coordinates[0];
             var depth = returnResponse.features[i].geometry.coordinates[2];
-            eqArrayDayM4p5.push({location: location, mag: mag, time: time, lat: lat, long: long, depth: d});
+            eqArrayDayM4p5.push({location: location, mag: mag, time: time, lat: lat, long: long, depth: depth});
         }
     };
 }
