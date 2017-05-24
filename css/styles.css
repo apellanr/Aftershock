@@ -58,7 +58,7 @@ html, body {
 .marker {
 	top: 7px;
 }
-.testPanel {
+.infoPanel {
 	-webkit-position: absolute;
 	-moz-position: absolute;
 	-ms-position: absolute;
@@ -66,14 +66,14 @@ html, body {
 	position: absolute;
 	width: 40vh;
 	background-color: #dddddd;
-	transform: translateX(0px);
+	display: initial;
 	transition: all .2s;
 	z-index: 1;
 	top: 21%;
 	opacity: .9;
 }
-.testPanel.on {
-	transform: translateX(-50vh);
+.infoPanel.on {
+	display: none;
 }
 .rightPanel {
 	right: 0;
@@ -86,7 +86,7 @@ html, body {
 	width: 35vh;
 	background-color: #dddddd;
 	height: 60vh;
-	transform: scaleX(0);
+	display: none;
 	transition: all .3s;
 	z-index: 2;
 	opacity: .9;
@@ -94,13 +94,13 @@ html, body {
 	overflow-y: auto;
 }
 .rightPanel.on {
-	transform: scaleX(1);
+	display: initial;
 }
 .panel-heading {
 	background-color: #0084b4;
 	color: white;
 	text-align: center;
-	font-size: 2.5vmin;
+	font-size: 20px;
 	width: 100%;
 }
 .twitterFeed {
@@ -124,7 +124,7 @@ html, body {
 #left-side-menu {
 	width: 100%;
 	text-align: center;
-	font-size: 25px;
+	font-size: 20px;
 }
 .panel-body {
 	font-size: 13px;
@@ -141,6 +141,9 @@ html, body {
 @media screen and (max-width: 768px) {
 	.input-group{
 		width: 100%;
+	}
+	.navbar {
+		z-index: 10;
 	}
 }
 @media screen and (max-width: 400px) {

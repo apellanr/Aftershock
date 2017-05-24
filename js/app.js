@@ -99,6 +99,7 @@ function initialize() {
     mapInit();
     panelTransitions();
     getAddress();
+    handleClose();
     $(document).off('ready', initialize);
 }
 function clickHandler() {
@@ -114,6 +115,7 @@ function clickHandler() {
     $(".glyphicon-search").click(getAddress);
 }
 function eqHistoryByDays() {
+    $('.collapse').collapse("hide")	;
     clearCircles();
     var days_clicked = 0;
     days_clicked = $(this).attr('days');
@@ -263,13 +265,24 @@ function getTweets(returnResponse) {
         $('#twitter').append($row);
     }
 }
+//-------------------------collapse---------------------------------------
+function handleClose(){
+    $('.closeInfo').on('click', function () {
+        $('.infoPanel').toggleClass('on');
+    });
+    $('.closeTwitter').on('click', function () {
+        $('.rightPanel').toggleClass('on');
+    });
+}
 //------------------------- Twitter Ends ---------------------------------
 function panelTransitions() {
     $('.twitterClick').on('click', function () {
         $('.rightPanel').toggleClass('on');
+        $('.collapse').collapse("hide")	;
     });
     $('.infoClick').on('click', function () {
-        $('.testPanel').toggleClass('on');
+        $('.infoPanel').toggleClass('on');
+        $('.collapse').collapse("hide")	;
     });
 }
 function reset(){
