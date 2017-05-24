@@ -26,6 +26,9 @@ html, body {
 	font-family: Open Sans, serif;
 	padding-left: 3%;
 }
+.navbar {
+	width: 100%;
+}
 body{
 	background-color: lavender;
 }
