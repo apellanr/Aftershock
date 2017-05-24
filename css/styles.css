@@ -59,6 +59,10 @@ body{
 	top: 7px;
 }
 .testPanel {
+	-webkit-position: absolute;
+	-moz-position: absolute;
+	-ms-position: absolute;
+	-o-position: absolute;
 	position: absolute;
 	width: 40vh;
 	background-color: #dddddd;
@@ -73,6 +77,10 @@ body{
 }
 .rightPanel {
 	right: 0;
+	-webkit-position: absolute;
+	-moz-position: absolute;
+	-ms-position: absolute;
+	-o-position: absolute;
 	position: absolute;
 	top: 21%;
 	width: 35vh;
