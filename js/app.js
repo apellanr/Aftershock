@@ -60,7 +60,7 @@ function ConstructorUSGS() {
             var long = returnResponse.features[i].geometry.coordinates[0];
             var lat = returnResponse.features[i].geometry.coordinates[1];
             var depth = returnResponse.features[i].geometry.coordinates[2];
-            eqArrayWeekM4p5.push({location, mag, time, lat, long, depth});
+            eqArrayWeekM4p5.push({location: location, mag: mag, time: time, lat: lat, long: long, depth: d});
         }
     };
     this.sortUSGSMonth = function (returnResponse) {
@@ -72,7 +72,7 @@ function ConstructorUSGS() {
             var long = returnResponse.features[i].geometry.coordinates[0];
             var lat = returnResponse.features[i].geometry.coordinates[1];
             var depth = returnResponse.features[i].geometry.coordinates[2];
-            eqArrayMonthM4p5.push({location, mag, time, lat, long, depth});
+            eqArrayMonthM4p5.push({location: location, mag: mag, time: time, lat: lat, long: long, depth: d});
         }
     };
     this.sortUSGSDay = function(returnResponse){
@@ -84,7 +84,7 @@ function ConstructorUSGS() {
             var lat = returnResponse.features[i].geometry.coordinates[1];
             var long = returnResponse.features[i].geometry.coordinates[0];
             var depth = returnResponse.features[i].geometry.coordinates[2];
-            eqArrayDayM4p5.push({location, mag, time, lat, long, depth});
+            eqArrayDayM4p5.push({location: location, mag: mag, time: time, lat: lat, long: long, depth: d});
         }
     };
 }
