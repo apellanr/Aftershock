@@ -4,6 +4,7 @@ var eqArrayWeekM4p5 = [];
 var eqArrayMonthM4p5 = [];
 var eqArrayDayM4p5 = [];
 var current_array = eqArrayMonthM4p5;
+var count = 0;
 function startUSGS(){
     usgsData = new ConstructorUSGS;
     usgsData.getUSGSWeek();
@@ -119,6 +120,8 @@ function eqHistoryByDays() {
     clearCircles();
     var days_clicked = 0;
     days_clicked = $(this).attr('days');
+    var title = $(this).text() + 's';
+    $('.legendTitle').text(title);
     if (days_clicked == 1) {
         current_array = eqArrayDayM4p5;
     }
@@ -136,6 +139,34 @@ function mapInit() {
         mapTypeId: 'roadmap'
     });
     $('.glyphicon-search').click(getAddress);
+    var icons = {
+       m4: {
+         name: '4.5 - 5m',
+         icon: 'assets/yellow_circle.jpg'
+       },
+       m5: {
+         name: '5 - 6m',
+         icon: 'assets/orange_circle.png'
+       },
+       m6: {
+         name: '6 - 7m',
+         icon: 'assets/red_circle.gif'
+       },
+       m7: {
+         name: '7m & higher',
+         icon: 'assets/black_circle.png'
+       }
+     };
+    var legend = document.getElementById('legend');
+    for (var key in icons) {
+        var type = icons[key];
+        var name = type.name;
+        var icon = type.icon;
+        var div = document.createElement('div');
+        div.innerHTML = '<img src="' + icon + '"> ' + name;
+        legend.appendChild(div);
+    }
+    map.controls[google.maps.ControlPosition.RIGHT_TOP].push(legend);
 }
 function getAddress() {
     clearCircles();
@@ -178,6 +209,8 @@ function generateCircle(temp, eqData) {
     var eqDataMagStringToNumber = parseInt(eqData.magnitude);
     var tempColor = null;
     var tempOpacity = null;
+    count ++;
+    $('.count').text(count);
     if (eqData.magnitude >= 7){
         tempColor = '#FFFFF';
         tempOpacity = 1;
@@ -217,6 +250,8 @@ function generateCircle(temp, eqData) {
     circleArray.push(circle);
 }
 function clearCircles() {
+    $('.legendTitle').text('Chose Date');
+    count = 0;
     for (var i = 0; i < circleArray.length; i++){
         circleArray[i].setMap(null);
     }
