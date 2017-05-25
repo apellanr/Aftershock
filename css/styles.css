@@ -5,10 +5,35 @@ html, body {
 	padding: 0;
 	overflow: hidden;
 }
+/*___________________start map______________________*/
 #map {
 	height: 100%;
 	width: 100%;
 }
+#legend {
+	font-family: Arial, sans-serif;
+	background: #fff;
+	padding: 10px;
+	margin: 10px;
+	margin-top: 60px;
+	border: 1px solid #000;
+}
+#legend h3 {
+	margin-top: 0;
+	text-align: center;
+}
+#legend img {
+	vertical-align: middle;
+	margin: 2px;
+	opacity: .8;
+	height: 25px;
+}
+#legend p {
+	font-size: 12px;
+	text-align: center;
+}
+/*___________________end map______________________*/
+
 @font-face {
 	font-family: earthquakefont;
 	src: url(earthquake.ttf);
