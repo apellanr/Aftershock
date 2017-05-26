@@ -3,6 +3,7 @@ var usgsData = null;
 var eqArrayWeekM4p5 = [];
 var eqArrayMonthM4p5 = [];
 var eqArrayDayM4p5 = [];
+var timeOutArray = [];
 var current_array = eqArrayMonthM4p5;
 var count = 0;
 function startUSGS(){
@@ -99,7 +100,6 @@ function initialize() {
     clickHandler();
     mapInit();
     panelTransitions();
-    getAddress();
     handleClose();
     $(document).off('ready', initialize);
 }
@@ -136,7 +136,8 @@ function eqHistoryByDays() {
 function mapInit() {
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 2,
-        mapTypeId: 'roadmap'
+        mapTypeId: 'roadmap',
+        center: {lat: 13.4443, lng: 144.7937}
     });
     $('.glyphicon-search').click(getAddress);
     var icons = {
@@ -169,12 +170,12 @@ function mapInit() {
     map.controls[google.maps.ControlPosition.RIGHT_TOP].push(legend);
 }
 function getAddress() {
-    clearCircles();
     var geocoder = new google.maps.Geocoder();
     var address = $('#address').val();
     geocoder.geocode( { 'address': address}, function(results, status) {
         if (status == 'OK') {
             map.setCenter(results[0].geometry.location);
+            map.setZoom(7);
         } else {
             alert('Geocode was not successful for the following reason: ' + status);
         }
@@ -190,13 +191,21 @@ function earthquake(current_array, days_clicked) {
             magnitude: current_array[i].mag.toString(),
             time: current_array[i].time
         };
-        setTimeout((function(eqData){
-            return function(){
-                combineLatLongForGoogle(eqData);
-            }
-        })(eqData), (400 * days_clicked) * (current_array.length - i) / current_array.length)
+        timeOutArray.push(
+            setTimeout((function(eqData){
+                return function(){
+                    combineLatLongForGoogle(eqData);
+                }
+            })(eqData), (400 * days_clicked) * (current_array.length - i) / current_array.length)
+        )
     }
 }
+function stopTimeout(){
+    timeOutArray.forEach(function(item){
+        clearTimeout(item);
+    })
+}
+
 function combineLatLongForGoogle(eqData) {
 
     var temp = {
@@ -250,6 +259,7 @@ function generateCircle(temp, eqData) {
     circleArray.push(circle);
 }
 function clearCircles() {
+    stopTimeout();
     $('.legendTitle').text('Chose Date');
     count = 0;
     for (var i = 0; i < circleArray.length; i++){
@@ -290,14 +300,14 @@ function getTweets(returnResponse) {
         var $hello = returnResponse.tweets.statuses[i].text;
         var $row = $('<div>').addClass('row');
         var $imgContainer = $('<div>').addClass('imgLogo');
-        var $imgDiv = $('<div>').addClass('col-xs-2 hidden-sm imgtweet');
+        var $imgDiv = $('<div>').addClass('imgtweet');
         var $imgLogo = $('<img>').addClass('imgSource').attr('src', 'css/twitterlogo.png');
-        var $twitterFeed = $('<div>').addClass('col-xs-10 twitterFeed');
+        var $twitterFeed = $('<div>').addClass('twitterFeed');
         $($imgDiv).append($imgLogo);
         $($imgContainer).append($imgDiv);
         $($twitterFeed).append($screenName, $hello);
         $($row).append($imgContainer, $twitterFeed);
-        $('#twitter').append($row);
+        $('#twitter').prepend($row);
     }
 }
 //-------------------------collapse---------------------------------------
