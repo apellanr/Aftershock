@@ -121,7 +121,7 @@ function eqHistoryByDays() {
     clearCircles();
     var days_clicked = 0;
     days_clicked = $(this).attr('days');
-    var title = $(this).text() + 's';
+    var title = $(this).text();
     $('.legendTitle').text(title);
     if (days_clicked == 1) {
         current_array = eqArrayDayM4p5;
@@ -263,7 +263,7 @@ function clearCircles() {
     stopTimeout();
     count = 0;
     $('.count').text(count);
-    $('.legendTitle').text('Chose Date');
+    $('.legendTitle').text('Choose Date');
 
     for (var i = 0; i < circleArray.length; i++){
         circleArray[i].setMap(null);
@@ -312,6 +312,8 @@ function getTweets(returnResponse) {
         $($row).append($imgContainer, $twitterFeed);
         $('#twitter').prepend($row);
     }
+    $('#twitter').prepend('<hr>');
+
 }
 //-------------------------collapse---------------------------------------
 function handleClose(){
