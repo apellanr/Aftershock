@@ -89,7 +89,8 @@ html, body {
 	-ms-position: absolute;
 	-o-position: absolute;
 	position: absolute;
-	width: 40vh;
+	width: 250px;
+	height: 70vh;
 	background-color: #dddddd;
 	display: initial;
 	transition: all .2s;
@@ -108,9 +109,9 @@ html, body {
 	-o-position: absolute;
 	position: absolute;
 	top: 21%;
-	width: 35vh;
+	width: 250px;
 	background-color: #dddddd;
-	height: 60vh;
+	height: 70vh;
 	display: none;
 	transition: all .3s;
 	z-index: 2;
@@ -140,6 +141,10 @@ html, body {
 #tweetInfo {
 	text-align: center;
 	font-size: 1.2em;
+}
+.imgLogo {
+	float: left;
+	padding: 3px;
 }
 .row {
 	margin-left: -15px;
@@ -180,5 +185,12 @@ html, body {
 	}
 	.input-group{
 		width: 100%;
+	}
+	#legend {
+		padding: 5px;
+		margin: 0px;
+	}
+	#legend img {
+		height: 15px;
 	}
 }
