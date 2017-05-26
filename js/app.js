@@ -261,8 +261,10 @@ function generateCircle(temp, eqData) {
 }
 function clearCircles() {
     stopTimeout();
-    $('.legendTitle').text('Chose Date');
     count = 0;
+    $('.count').text(count);
+    $('.legendTitle').text('Chose Date');
+
     for (var i = 0; i < circleArray.length; i++){
         circleArray[i].setMap(null);
     }
