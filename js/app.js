@@ -101,6 +101,7 @@ function initialize() {
     mapInit();
     panelTransitions();
     handleClose();
+    closeNav();
     $(document).off('ready', initialize);
 }
 function clickHandler() {
@@ -333,3 +334,17 @@ function panelTransitions() {
 function reset(){
     current_array = [];
 }
+//------------------------- closeNav ---------------------------------
+function closeNav(){
+    $(document).click(function (event) {
+        var clickover = $(event.target);
+        var hamburger = $('.navbar-toggle');
+        var navBarwindow = $('.navbar-collapse');
+        var opened = navBarwindow.hasClass('in');
+        var ul = $('.scroll-nav');
+        if (opened === true && !clickover.hasClass("navbar-form") && !clickover.hasClass("in") && !clickover.hasClass("form-control")) {
+            $(hamburger).click();
+        }
+    });
+}
+//------------------------- closeNav Ends ---------------------------------
