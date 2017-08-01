@@ -1,6 +1,6 @@
 # Aftershock
 
-Developed during our second hackathon, Aftershocks was created in the hopes of educating and informing people about earthquakes and disaster relief locations in case of an emergency.
+Aftershock, a hackathon winning project, was created in the hopes of informing individuals about earthquakes and disaster relief locations in case of an emergency. The idea of the application was inspired by Joshua Huber, who once was on a trip to New Zealand when a 6.3 magnitude earthquake struck the surrounding area around him. With no available cellular service, his family was not able to get a hold of him until a couple of days later. Alleviating this fear is the main purpose of our application. In the near future, we want to incorporate an email notifiation system in order to keep individuals in contact with their loved ones.
 
 ### Team
   - Senior Mentor: Gwen Pacifico
